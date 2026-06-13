@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Research Information project cover placeholder</title>
+  <desc id="desc">A placeholder project image that can be replaced later.</desc>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <path d="M0 520H1200V675H0Z" fill="#e2e8f0"/>
+  <path d="M120 130H1080V475H120Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="4"/>
+  <path d="M170 195H1030" stroke="#94a3b8" stroke-width="14" stroke-linecap="round"/>
+  <path d="M170 260H800" stroke="#cbd5e1" stroke-width="14" stroke-linecap="round"/>
+  <path d="M170 325H910" stroke="#cbd5e1" stroke-width="14" stroke-linecap="round"/>
+  <text x="120" y="585" fill="#0f172a" font-family="Arial, sans-serif" font-size="46" font-weight="700">Project cover</text>
+  <text x="120" y="625" fill="#475569" font-family="Arial, sans-serif" font-size="24">Replace this placeholder image later.</text>
+</svg>
