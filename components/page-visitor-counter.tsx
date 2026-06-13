@@ -1,86 +1,96 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useState } from "react"
+import { usePathname } from "next/navigation"
 
-const SESSION_VISITOR_NUMBER_KEY = "devrajsinh-site-visitor-number"
+const PAGE_VIEWS_API_BASE = "https://page-views-api.ratneshc.com/api/v1"
+const PAGE_VIEWS_SITE_ID =
+  process.env.NEXT_PUBLIC_PAGE_VIEWS_SITE_ID || "devraj-jhala-portfolio"
 
-function formatOrdinal(value: number) {
-  const remainder = value % 100
-  const formattedValue = value.toLocaleString()
-
-  if (remainder >= 11 && remainder <= 13) {
-    return `${formattedValue}th`
-  }
-
-  switch (value % 10) {
-    case 1:
-      return `${formattedValue}st`
-    case 2:
-      return `${formattedValue}nd`
-    case 3:
-      return `${formattedValue}rd`
-    default:
-      return `${formattedValue}th`
-  }
+type PageViewsPayload = {
+  views?: number
 }
 
-function setCounterText(element: HTMLDivElement | null, count: number) {
-  if (!element) {
-    return
+function normalizePath(pathname: string) {
+  const path = pathname.trim() || "/"
+
+  if (path === "/") {
+    return path
   }
 
-  element.textContent = `You are the ${formatOrdinal(count)} visitor`
+  return path.replace(/\/+$/, "")
+}
+
+function getPageViewsUrl(endpoint: "track" | "views", pathname: string) {
+  const params = new URLSearchParams({
+    path: pathname,
+    site: PAGE_VIEWS_SITE_ID,
+  })
+
+  return `${PAGE_VIEWS_API_BASE}/${endpoint}?${params.toString()}`
+}
+
+function formatPageViews(views: number) {
+  const label = views === 1 ? "view" : "views"
+
+  return `${views.toLocaleString()} ${label} on this page`
 }
 
 function PageVisitorCounter() {
-  const countRef = useRef<HTMLDivElement>(null)
+  const pathname = usePathname()
+  const [counterText, setCounterText] = useState("Loading page views")
 
   useEffect(() => {
-    async function loadVisitorCount() {
+    let isCancelled = false
+    const trackedPath = normalizePath(pathname)
+
+    async function loadPageViews() {
+      setCounterText("Loading page views")
+
       try {
-        const storedVisitorNumber = Number.parseInt(
-          window.sessionStorage.getItem(SESSION_VISITOR_NUMBER_KEY) ?? "",
-          10
-        )
+        await fetch(getPageViewsUrl("track", trackedPath), {
+          cache: "no-store",
+          keepalive: true,
+        }).catch(() => null)
 
-        if (Number.isFinite(storedVisitorNumber) && storedVisitorNumber > 0) {
-          setCounterText(countRef.current, storedVisitorNumber)
-          return
-        }
-
-        const response = await fetch("/api/visits", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-          },
+        const response = await fetch(getPageViewsUrl("views", trackedPath), {
+          cache: "no-store",
         })
 
         if (!response.ok) {
-          throw new Error("Unable to load visitor count")
+          throw new Error("Unable to load page views")
         }
 
-        const payload = (await response.json()) as { count?: number }
-        const count = payload.count ?? 1
+        const payload = (await response.json()) as PageViewsPayload
+        const views = Number(payload.views)
 
-        window.sessionStorage.setItem(SESSION_VISITOR_NUMBER_KEY, String(count))
-        setCounterText(countRef.current, count)
+        if (!Number.isFinite(views) || views < 0) {
+          throw new Error("Invalid page views payload")
+        }
+
+        if (!isCancelled) {
+          setCounterText(formatPageViews(views))
+        }
       } catch {
-        if (countRef.current) {
-          countRef.current.textContent = "Visitor count unavailable"
+        if (!isCancelled) {
+          setCounterText("Page views unavailable")
         }
       }
     }
 
-    void loadVisitorCount()
-  }, [])
+    void loadPageViews()
+
+    return () => {
+      isCancelled = true
+    }
+  }, [pathname])
 
   return (
     <div
-      ref={countRef}
       aria-live="polite"
       className="text-center text-xs text-muted-foreground"
     >
-      You are the -- visitor
+      {counterText}
     </div>
   )
 }

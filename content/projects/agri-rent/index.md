@@ -3,7 +3,6 @@ title: Agri Rent
 published: June 26, 2025
 category: Full Stack Project
 summary: A hackathon-built commerce platform for renting agricultural equipment with Sanity-managed products, Clerk authentication, Redux state, and Stripe payments.
-cover: /projects/agri-rent/cover.svg
 liveUrl: https://agri-rent.vercel.app/
 codeUrl: https://github.com/Devrajsinh-Jhala/Sound-Shop
 order: 6

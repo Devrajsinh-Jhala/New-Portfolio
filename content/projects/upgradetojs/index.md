@@ -3,7 +3,6 @@ title: UpgradetoJS
 published: March 31, 2024
 category: Front End Project
 summary: A service website for upgrading older PHP, Laravel, and HTML websites into faster JavaScript-based ecosystems like React and Next.js.
-cover: /projects/upgradetojs/cover.svg
 liveUrl: https://upgrade-to-js.vercel.app/
 codeUrl: https://github.com/Devrajsinh-Jhala/Upgrade-to-JS
 order: 2

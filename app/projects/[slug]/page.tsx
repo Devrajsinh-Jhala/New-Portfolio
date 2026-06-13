@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import {
@@ -111,18 +110,6 @@ export default async function ProjectDetailPage({
           </div>
         </div>
       </header>
-
-      <div className="relative mt-8 aspect-[16/8.5] overflow-hidden rounded-md border border-border/70 bg-muted shadow-sm shadow-foreground/5">
-        <Image
-          src={project.cover}
-          alt=""
-          fill
-          unoptimized
-          priority
-          sizes="(min-width: 1024px) 960px, 100vw"
-          className="object-cover"
-        />
-      </div>
 
       <div className="grid gap-9 py-9 lg:grid-cols-[minmax(0,1fr)_16rem] lg:items-start">
         <div className="min-w-0">

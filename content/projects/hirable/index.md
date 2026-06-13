@@ -3,7 +3,6 @@ title: Hirable
 published: September 19, 2022
 category: Front End Project
 summary: A frontend onboarding and hiring platform prototype with dedicated pages for colleges, students, companies, authentication, signup, and email verification.
-cover: /projects/hirable/cover.svg
 liveUrl: https://on-boarding-site.vercel.app/
 codeUrl: https://github.com/Devrajsinh-Jhala/On-Boarding-Site
 order: 8

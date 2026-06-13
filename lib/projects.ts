@@ -6,7 +6,6 @@ type ProjectFrontmatter = {
   published: string
   category: string
   summary: string
-  cover: string
   liveUrl?: string
   codeUrl?: string
   order: number
@@ -155,7 +154,6 @@ function getProjectFromDirectory(slug: string): Project {
     published: stringField(data, "published"),
     category: stringField(data, "category"),
     summary: stringField(data, "summary"),
-    cover: stringField(data, "cover"),
     liveUrl: optionalStringField(data, "liveUrl"),
     codeUrl: optionalStringField(data, "codeUrl"),
     order: numberField(data, "order"),

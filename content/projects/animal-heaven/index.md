@@ -3,7 +3,6 @@ title: Animal Heaven
 published: June 26, 2025
 category: Full Stack Project
 summary: A full-stack application for animal lovers with communities, blogs, premium content, authentication, payments, and Sanity-backed content management.
-cover: /projects/animal-heaven/cover.svg
 liveUrl: https://animal-heaven.vercel.app/
 codeUrl: https://github.com/Devrajsinh-Jhala/PetsLife
 order: 4

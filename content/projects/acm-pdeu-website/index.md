@@ -3,7 +3,6 @@ title: ACM PDEU Website
 published: June 26, 2025
 category: Full Stack Project
 summary: A full-stack website for the ACM PDEU Student Chapter with Sanity-managed content, authentication, blog workflows, ISR, and a polished chapter presence.
-cover: /projects/acm-pdeu-website/cover.svg
 liveUrl: https://acm-web.vercel.app/
 codeUrl: https://github.com/Devrajsinh-Jhala/acm-web
 order: 3

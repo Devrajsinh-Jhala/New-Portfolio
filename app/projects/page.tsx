@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
 import {
   ArrowUpRight,
@@ -63,18 +62,7 @@ export default function ProjectsPage() {
               href={`/projects/${project.slug}`}
               className="group block h-full focus-visible:outline-none"
             >
-              <article className="flex h-full flex-col overflow-hidden rounded-md border border-border/70 bg-card shadow-sm shadow-foreground/5 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-foreground/20 group-hover:shadow-md group-hover:shadow-foreground/10 group-focus-visible:ring-3 group-focus-visible:ring-ring/35">
-                <div className="relative aspect-[16/9] overflow-hidden bg-muted">
-                  <Image
-                    src={project.cover}
-                    alt=""
-                    fill
-                    unoptimized
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-cover transition-transform duration-300 group-hover:scale-[1.025]"
-                  />
-                </div>
-
+              <article className="flex h-full flex-col rounded-md border border-border/70 bg-card shadow-sm shadow-foreground/5 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-foreground/20 group-hover:shadow-md group-hover:shadow-foreground/10 group-focus-visible:ring-3 group-focus-visible:ring-ring/35">
                 <div className="flex flex-1 flex-col p-4 sm:p-5">
                   <div className="mb-4 flex flex-wrap gap-2">
                     <span className="inline-flex items-center gap-1.5 rounded-md border border-border/70 bg-muted/60 px-2 py-1 text-xs font-medium text-muted-foreground">

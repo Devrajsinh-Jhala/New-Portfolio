@@ -3,7 +3,6 @@ title: Developer Grind
 published: April 2, 2023
 category: Full Stack Project
 summary: A developer-focused blog platform with Sanity-powered content, authentication, search, rich text writing, and an admin approval flow for comments.
-cover: /projects/developer-grind/cover.svg
 liveUrl: https://developer-grind.vercel.app/
 codeUrl: https://github.com/Devrajsinh-Jhala/Developer-Blog
 order: 1

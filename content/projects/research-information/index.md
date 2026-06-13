@@ -3,7 +3,6 @@ title: Research Information
 published: June 26, 2025
 category: Full Stack Project
 summary: A university project for discovering research grants and scholarships with search, tags, pagination, monthly ISR, and Sanity-powered content management.
-cover: /projects/research-information/cover.svg
 liveUrl: https://research-information.vercel.app/
 codeUrl: https://github.com/Devrajsinh-Jhala/Cyber-Project
 order: 7

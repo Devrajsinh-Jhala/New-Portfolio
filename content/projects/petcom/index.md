@@ -3,7 +3,6 @@ title: Petcom
 published: June 26, 2025
 category: Full Stack Project
 summary: A Reddit-inspired community application for pet lovers with communities, posts, nested comments, voting, custom feeds, uploads, and advanced caching.
-cover: /projects/petcom/cover.svg
 liveUrl: https://petcom.vercel.app/
 codeUrl: https://github.com/Devrajsinh-Jhala/Petcom
 order: 5
