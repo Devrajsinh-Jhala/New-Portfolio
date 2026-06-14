@@ -27,6 +27,12 @@ const monthFormatter = new Intl.DateTimeFormat("en", {
   month: "short",
   timeZone: "UTC",
 })
+const tooltipDateFormatter = new Intl.DateTimeFormat("en", {
+  day: "numeric",
+  month: "short",
+  timeZone: "UTC",
+  year: "numeric",
+})
 const legendCounts = [0, 1, 4, 8, 13] as const
 
 type ContributionDay = {
@@ -132,6 +138,20 @@ function getContributionTone(count: number) {
   return "color-mix(in oklch, var(--foreground) 86%, var(--background))"
 }
 
+function getContributionLabel(day: ContributionDay) {
+  if (!day.date) {
+    return "No contribution data"
+  }
+
+  const contributionLabel =
+    day.contributionCount === 1 ? "contribution" : "contributions"
+  const formattedDate = tooltipDateFormatter.format(
+    new Date(`${day.date}T00:00:00Z`)
+  )
+
+  return `${day.contributionCount.toLocaleString()} ${contributionLabel} on ${formattedDate}`
+}
+
 async function getGithubContributions(): Promise<GithubContributionState> {
   await connection()
 
@@ -202,16 +222,15 @@ async function getGithubContributions(): Promise<GithubContributionState> {
 
 function ContributionSquare({ day }: { day: ContributionDay }) {
   const hasContributions = day.contributionCount > 0
+  const label = getContributionLabel(day)
 
   return (
     <span
-      title={
-        day.date
-          ? `${day.contributionCount} contributions on ${day.date}`
-          : "No contribution data"
-      }
+      aria-label={label}
+      role="img"
+      tabIndex={day.date ? 0 : -1}
       className={cn(
-        "size-3 rounded-[4px] ring-1 ring-foreground/5 transition-all duration-150 ring-inset hover:relative hover:z-10 hover:scale-125 hover:ring-foreground/25",
+        "group/contribution relative size-3 rounded-[4px] ring-1 ring-foreground/5 transition-all duration-150 ring-inset hover:z-20 hover:scale-125 hover:ring-foreground/25 focus-visible:z-20 focus-visible:scale-125 focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:outline-none",
         !hasContributions && "shadow-inner shadow-foreground/[0.02]"
       )}
       style={{
@@ -220,7 +239,17 @@ function ContributionSquare({ day }: { day: ContributionDay }) {
           ? "0 0 12px color-mix(in oklch, var(--foreground) 18%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.14)"
           : undefined,
       }}
-    />
+    >
+      {day.date ? (
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-full left-1/2 z-30 mb-2 -translate-x-1/2 rounded-md bg-popover px-2 py-1 text-xs font-medium whitespace-nowrap text-popover-foreground opacity-0 shadow-sm shadow-foreground/10 transition-opacity duration-150 group-hover/contribution:opacity-100 group-focus-visible/contribution:opacity-100"
+        >
+          {day.contributionCount.toLocaleString()} on{" "}
+          {tooltipDateFormatter.format(new Date(`${day.date}T00:00:00Z`))}
+        </span>
+      ) : null}
+    </span>
   )
 }
 
@@ -249,7 +278,7 @@ function ContributionGraph({ weeks }: { weeks: ContributionWeek[] }) {
 
   return (
     <div>
-      <div className="overflow-x-auto pb-2">
+      <div className="overflow-x-auto overflow-y-hidden pb-2 lg:overflow-visible">
         <div className="min-w-max">
           <div
             className="ml-9 grid gap-1 pb-3 text-[10px] leading-none text-muted-foreground"

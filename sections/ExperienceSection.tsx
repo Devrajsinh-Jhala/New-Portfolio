@@ -30,6 +30,7 @@ const experiences: Experience[] = [
     company: "India Meteorological Department",
     role: "Radar Research Intern",
     period: "June 2023 - August 2023",
+    location: "Remote",
     highlights: [
       "Contributed to rainfall estimation using a customized dynamic Z-R relationship based on echo top for Bhopal.",
       "Visualized and segregated clouds from radar images, then estimated rainfall with the Marshall-Palmer equation.",
@@ -40,6 +41,7 @@ const experiences: Experience[] = [
     company: "DevCode",
     role: "Full Stack Developer",
     period: "April 2023 - May 2023",
+    location: "Remote",
     highlights: [
       "Integrated REST APIs into the React front end.",
       "Managed application state efficiently while keeping the interface clean and polished.",

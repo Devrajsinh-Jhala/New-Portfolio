@@ -28,7 +28,8 @@ const profileSignals = [
   },
   {
     label: "Writing and reflection",
-    value: "Sharing practical lessons whenever something feels worth passing on.",
+    value:
+      "Sharing practical lessons whenever something feels worth passing on.",
     icon: PenLine,
   },
 ] as const
@@ -93,7 +94,7 @@ export default function AboutPage() {
               width={240}
               height={240}
               priority
-              className="relative size-44 rounded-full border-4 border-background object-cover shadow-2xl shadow-foreground/15 ring-1 ring-border/80 sm:size-52 lg:size-60"
+              className="relative size-44 rounded-full border-4 border-background object-cover shadow-2xl ring-1 shadow-foreground/15 ring-border/80 sm:size-52 lg:size-60"
             />
           </div>
 
@@ -118,7 +119,10 @@ export default function AboutPage() {
                 </Link>
               </Button>
               <Button asChild variant="outline" className="h-9 px-3 text-sm">
-                <Link href="https://drive.google.com/file/d/1hGj4JakFQbfkDI3-C4RMgUvXpbxk-rWN/view?usp=sharing" target="_blank">
+                <Link
+                  href="https://drive.google.com/file/d/1hGj4JakFQbfkDI3-C4RMgUvXpbxk-rWN/view?usp=sharing"
+                  target="_blank"
+                >
                   <Download aria-hidden="true" data-icon="inline-start" />
                   Download CV
                 </Link>
@@ -178,7 +182,7 @@ export default function AboutPage() {
 
         <div className="space-y-6 border-l border-border/70 pl-5 text-sm leading-7 text-muted-foreground sm:pl-7 sm:text-base sm:leading-8">
           {journey.map((paragraph) => (
-            <p key={paragraph} className="text-pretty">
+            <p key={paragraph} className="text-justify hyphens-auto">
               {paragraph}
             </p>
           ))}

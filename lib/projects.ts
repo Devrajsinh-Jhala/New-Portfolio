@@ -174,10 +174,21 @@ function getProjectSlugs() {
     .map((entry) => entry.name)
 }
 
+function getPublishedTime(project: Project) {
+  const timestamp = Date.parse(project.published)
+
+  return Number.isNaN(timestamp) ? 0 : timestamp
+}
+
 function getProjects() {
   return getProjectSlugs()
     .map((slug) => getProjectFromDirectory(slug))
-    .sort((first, second) => first.order - second.order)
+    .sort((first, second) => {
+      const publishedDifference =
+        getPublishedTime(second) - getPublishedTime(first)
+
+      return publishedDifference || first.order - second.order
+    })
 }
 
 function getProject(slug: string) {
