@@ -1,24 +1,14 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { usePathname } from "next/navigation"
 
 const PAGE_VIEWS_API_BASE = "https://page-views-api.ratneshc.com/api/v1"
 const PAGE_VIEWS_SITE_ID =
   process.env.NEXT_PUBLIC_PAGE_VIEWS_SITE_ID || "devraj-jhala-portfolio"
+const SITE_WIDE_COUNTER_PATH = "/"
 
 type PageViewsPayload = {
   views?: number
-}
-
-function normalizePath(pathname: string) {
-  const path = pathname.trim() || "/"
-
-  if (path === "/") {
-    return path
-  }
-
-  return path.replace(/\/+$/, "")
 }
 
 function getPageViewsUrl(endpoint: "track" | "views", pathname: string) {
@@ -30,50 +20,72 @@ function getPageViewsUrl(endpoint: "track" | "views", pathname: string) {
   return `${PAGE_VIEWS_API_BASE}/${endpoint}?${params.toString()}`
 }
 
-function formatPageViews(views: number) {
-  const label = views === 1 ? "view" : "views"
+function getOrdinalSuffix(value: number) {
+  const lastTwoDigits = value % 100
 
-  return `${views.toLocaleString()} ${label} on this page`
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+    return "th"
+  }
+
+  switch (value % 10) {
+    case 1:
+      return "st"
+    case 2:
+      return "nd"
+    case 3:
+      return "rd"
+    default:
+      return "th"
+  }
+}
+
+function formatOrdinal(value: number) {
+  return `${value.toLocaleString()}${getOrdinalSuffix(value)}`
+}
+
+function formatVisitorCount(views: number) {
+  return `You are the ${formatOrdinal(views)} visitor`
 }
 
 function PageVisitorCounter() {
-  const pathname = usePathname()
-  const [counterText, setCounterText] = useState("Loading page views")
+  const [counterText, setCounterText] = useState("Counting visitors")
 
   useEffect(() => {
     let isCancelled = false
-    const trackedPath = normalizePath(pathname)
 
     async function loadPageViews() {
-      setCounterText("Loading page views")
+      setCounterText("Counting visitors")
 
       try {
-        await fetch(getPageViewsUrl("track", trackedPath), {
+        await fetch(getPageViewsUrl("track", SITE_WIDE_COUNTER_PATH), {
           cache: "no-store",
           keepalive: true,
         }).catch(() => null)
 
-        const response = await fetch(getPageViewsUrl("views", trackedPath), {
-          cache: "no-store",
-        })
+        const response = await fetch(
+          getPageViewsUrl("views", SITE_WIDE_COUNTER_PATH),
+          {
+            cache: "no-store",
+          }
+        )
 
         if (!response.ok) {
-          throw new Error("Unable to load page views")
+          throw new Error("Unable to load visitor count")
         }
 
         const payload = (await response.json()) as PageViewsPayload
         const views = Number(payload.views)
 
-        if (!Number.isFinite(views) || views < 0) {
-          throw new Error("Invalid page views payload")
+        if (!Number.isInteger(views) || views < 1) {
+          throw new Error("Invalid visitor count payload")
         }
 
         if (!isCancelled) {
-          setCounterText(formatPageViews(views))
+          setCounterText(formatVisitorCount(views))
         }
       } catch {
         if (!isCancelled) {
-          setCounterText("Page views unavailable")
+          setCounterText("Visitor count unavailable")
         }
       }
     }
@@ -83,7 +95,7 @@ function PageVisitorCounter() {
     return () => {
       isCancelled = true
     }
-  }, [pathname])
+  }, [])
 
   return (
     <div
