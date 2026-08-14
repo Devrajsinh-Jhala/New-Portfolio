@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   title: "Research",
   description:
     "Research work and publications by Devrajsinh Jhala in machine learning, deep learning, sensor fusion, and software-driven analysis.",
+  alternates: { canonical: "/research" },
 }
 
 export default function ResearchPage() {
@@ -81,6 +82,16 @@ export default function ResearchPage() {
                   {work.summary}
                 </p>
 
+                <div className="mt-4 space-y-1 text-xs leading-5 text-muted-foreground">
+                  <p>
+                    <span className="font-medium text-foreground/80">
+                      {work.publicationType}
+                    </span>{" "}
+                    · {work.publisher}
+                  </p>
+                  <p className="line-clamp-2">{work.authors.join(", ")}</p>
+                </div>
+
                 <dl className="mt-5 grid gap-2 border-t border-border/70 pt-4 sm:grid-cols-3">
                   {work.metrics.map((metric) => (
                     <div key={metric.label}>
@@ -111,7 +122,7 @@ export default function ResearchPage() {
                     View research
                     <ArrowUpRight
                       aria-hidden="true"
-                      className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                     />
                   </span>
                   <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">

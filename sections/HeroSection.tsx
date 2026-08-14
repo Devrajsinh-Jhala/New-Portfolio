@@ -1,41 +1,29 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowUpRight, FileText } from "lucide-react"
+import { ArrowUpRight, FileText, Mail, MapPin } from "lucide-react"
 
-import { BlurShimmerText } from "@/components/blur-shimmer-text"
 import { SocialIcon } from "@/components/social-icon"
 import { Button } from "@/components/ui/button"
-import { socialLinks } from "@/lib/profile"
+import { profile, socialLinks } from "@/lib/profile"
 
 const heroContent = {
-  name: "Devrajsinh Jhala",
-  roles: ["Software Engineer", "Open-source Builder", "AI/ML Researcher"],
+  name: profile.name,
+  role: `${profile.role} at ${profile.employer}`,
+  focusAreas: ["Systems", "Developer tools", "Applied ML"],
   description:
-    "Software engineer building full-stack products and open-source developer tools across TypeScript, Python, machine learning, and research workflows.",
+    "I build dependable platform software, open-source tools used through npm and PyPI, and research-backed machine-learning systems.",
   actions: {
     primary: {
-      label: "View my CV",
-      href: "https://drive.google.com/file/d/1hGj4JakFQbfkDI3-C4RMgUvXpbxk-rWN/view?usp=sharing",
+      label: "View projects",
+      href: "/projects",
     },
     secondary: {
-      label: "Read my work",
-      href: "https://hashnode.com/@DEVRAJSINH",
+      label: "View résumé",
+      href: profile.resumePath,
     },
   },
   socials: socialLinks,
 } as const
-
-function RotatingRoles() {
-  return (
-    <div
-      aria-label={heroContent.roles.join(", ")}
-      aria-live="polite"
-      className="min-h-8 overflow-hidden text-xl font-semibold tracking-normal text-foreground sm:min-h-9 sm:text-2xl"
-    >
-      <BlurShimmerText texts={[...heroContent.roles]} interval={2.8} blur={8} />
-    </div>
-  )
-}
 
 function HeroSection() {
   return (
@@ -43,39 +31,62 @@ function HeroSection() {
       <div className="flex flex-col items-center justify-start gap-6 lg:flex-row lg:items-center lg:gap-8">
         <div className="relative shrink-0">
           <Image
-            src="/images/animePfp.jpeg"
-            alt="Anime profile portrait of Devrajsinh Jhala"
-            width={254}
-            height={352}
-            priority
-            className="h-[16.5rem] w-[12rem] rounded-lg border border-border/70 object-cover shadow-xl shadow-foreground/10 sm:h-[19.5rem] sm:w-[14.125rem]"
+            src="/images/myPhoto.webp"
+            alt={`Profile portrait of ${heroContent.name}`}
+            width={480}
+            height={480}
+            preload
+            className="size-44 rounded-full border-4 border-background object-cover shadow-2xl ring-1 shadow-foreground/15 ring-border/80 sm:size-52 lg:size-60"
           />
         </div>
 
         <div className="flex max-w-lg min-w-0 flex-col items-center gap-4 text-center lg:items-start lg:text-left">
-          <div className="space-y-2.5">
+          <div className="space-y-3">
             <h1 className="text-3xl font-semibold tracking-normal text-balance sm:text-4xl lg:text-5xl">
               {heroContent.name}
             </h1>
-            <RotatingRoles />
+            <p className="text-xl font-semibold tracking-normal text-foreground sm:text-2xl">
+              {heroContent.role}
+            </p>
           </div>
 
-          <p className="max-w-md text-sm leading-6 text-muted-foreground">
+          <p className="max-w-lg text-sm leading-7 text-muted-foreground sm:text-base">
             {heroContent.description}
           </p>
 
+          <div className="flex flex-wrap justify-center gap-2 lg:justify-start">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-card px-3 py-1 text-xs text-muted-foreground">
+              <MapPin aria-hidden="true" className="size-3.5" />
+              {profile.location}
+            </span>
+            {heroContent.focusAreas.map((area) => (
+              <span
+                key={area}
+                className="rounded-full border border-border/70 bg-card px-3 py-1 text-xs text-muted-foreground"
+              >
+                {area}
+              </span>
+            ))}
+          </div>
+
           <div className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row">
             <Button asChild className="h-9 px-3 text-sm">
-              <Link href={heroContent.actions.primary.href} target="_blank">
-                <FileText aria-hidden="true" data-icon="inline-start" />
+              <Link href={heroContent.actions.primary.href}>
                 {heroContent.actions.primary.label}
+                <ArrowUpRight aria-hidden="true" data-icon="inline-end" />
               </Link>
             </Button>
             <Button asChild variant="outline" className="h-9 px-3 text-sm">
               <Link href={heroContent.actions.secondary.href} target="_blank">
+                <FileText aria-hidden="true" data-icon="inline-start" />
                 {heroContent.actions.secondary.label}
-                <ArrowUpRight aria-hidden="true" data-icon="inline-end" />
               </Link>
+            </Button>
+            <Button asChild variant="ghost" className="h-9 px-3 text-sm">
+              <a href={`mailto:${profile.email}`}>
+                <Mail aria-hidden="true" data-icon="inline-start" />
+                Contact me
+              </a>
             </Button>
           </div>
 

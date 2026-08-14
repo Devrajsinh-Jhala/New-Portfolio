@@ -40,6 +40,6 @@ The app uses Sanity CMS for structured content, Next.js for the application laye
 - Sanity CMS v2
 - TypeScript
 
-## What I Learned
+## Engineering takeaways
 
 This project helped me understand how CMS-backed applications are structured, especially when public content and moderation workflows need to work together. It also gave me practical experience with Sanity schemas, typed frontend integration, and building a cleaner editorial flow.

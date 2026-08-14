@@ -7,6 +7,7 @@ liveUrl: https://devrajsinh-jhala.github.io/ResearchPlot/
 codeUrl: https://github.com/Devrajsinh-Jhala/ResearchPlot
 packageName: researchplot-venues
 packageRegistry: PyPI
+installCommand: pip install researchplot-venues
 order: 1
 tech:
   - Python
@@ -31,6 +32,17 @@ features:
 ResearchPlot is an open-source Python package that checks the files researchers actually submit. It resolves a locked, source-backed venue profile, plans the evidence required for each rule, inspects live Matplotlib figures and saved artifacts, and reports both known violations and anything it could not establish.
 
 It is designed as a compliance assistant rather than an acceptance guarantee. Official sources, interpretation notes, caveats, skipped checks, and coverage gaps remain visible so a researcher can understand exactly why a result is compliant, non-compliant, or indeterminate.
+
+## Quick start
+
+Install the package and audit an existing figure against a pinned venue profile:
+
+```bash
+pip install researchplot-venues
+researchplot audit figures/figure1.pdf --profile nature@2026.08.0
+```
+
+The same checks are available through Python, a local browser workspace, CI, and machine-readable JSON or SARIF reports.
 
 ## The Problem
 
@@ -62,6 +74,15 @@ Project locks prevent silent updates or rollback. Missing official guidance stay
 - Run the same checks locally, through Python, in a browser workspace, or in CI
 - Keep normal checks offline, local, and free of telemetry
 
-## What I Learned
+## Results and impact
 
-Building ResearchPlot required treating documentation, provenance, parsers, security boundaries, accessibility, and reproducibility as one system. It deepened my experience with scientific file formats, schema design, rule coverage, deterministic artifacts, and developer tooling that must explain uncertainty rather than hide it.
+- Published on PyPI with 22 bundled, source-backed venue and publisher profiles
+- Audits PDF, SVG, PNG, JPEG, TIFF, EPS, live Matplotlib figures, and submission bundles
+- Produces deterministic HTML, JSON, SARIF, and verified archive outputs
+- Keeps normal checks local, offline, and free of telemetry
+
+## Engineering decisions
+
+ResearchPlot treats every rule as an evidence-planning problem. Profiles are immutable and source-backed, unsupported assumptions remain visible, and missing evidence produces an indeterminate result rather than a false pass.
+
+That model connects documentation provenance, file-format parsing, path safety, accessibility, and reproducibility into one system while keeping scientific data unchanged.

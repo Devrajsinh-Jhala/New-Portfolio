@@ -1,6 +1,11 @@
 const profile = {
   name: "Devrajsinh Jhala",
+  role: "Senior Software Engineer",
+  employer: "MediaTek",
+  location: "Bengaluru, India",
   email: "jhaladevrajsinh11@gmail.com",
+  website: "https://www.devraj.pro",
+  resumePath: "/resume.pdf",
   githubUsername: "Devrajsinh-Jhala",
   xUsername: "JHALA_D_S",
   linkedinPath: "devrajsinh-jhala",

@@ -1,6 +1,6 @@
 ---
 title: Animal Heaven
-published: June 26, 2025
+published: July 23, 2023
 category: Full Stack Project
 summary: A full-stack application for animal lovers with communities, blogs, premium content, authentication, payments, and Sanity-backed content management.
 liveUrl: https://animal-heaven.vercel.app/
@@ -50,6 +50,6 @@ After building Petcom, I wanted to extend the concept into a broader platform th
 - Authentication: Clerk
 - Payments: Stripe
 
-## What I Learned
+## Engineering takeaways
 
 This project helped me connect multiple product surfaces: community, content, authentication, and payment flows. It also pushed me to think carefully about protected routes, loading states, and paid content access.

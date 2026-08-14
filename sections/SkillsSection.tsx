@@ -2,29 +2,16 @@ import type { IconType } from "react-icons"
 import {
   SiC,
   SiCplusplus,
-  SiCss,
   SiDocker,
-  SiExpress,
-  SiFirebase,
-  SiGit,
-  SiGithub,
-  SiHtml5,
-  SiJavascript,
-  SiMongodb,
+  SiGithubactions,
   SiMysql,
   SiNextdotjs,
   SiNodedotjs,
-  SiOpenjdk,
   SiPostgresql,
-  SiPrisma,
   SiPython,
+  SiPytorch,
   SiReact,
-  SiRedux,
-  SiShadcnui,
-  SiSupabase,
-  SiTailwindcss,
   SiTypescript,
-  SiVercel,
 } from "react-icons/si"
 
 type Skill = {
@@ -33,177 +20,108 @@ type Skill = {
   color: string
 }
 
-const skills: Skill[] = [
+type SkillGroup = {
+  title: string
+  description: string
+  skills: Skill[]
+}
+
+const skillGroups: SkillGroup[] = [
   {
-    name: "Next.js",
-    icon: SiNextdotjs,
-    color: "var(--foreground)",
+    title: "Systems",
+    description: "Platform and performance-oriented engineering.",
+    skills: [
+      { name: "C", icon: SiC, color: "#a8b9cc" },
+      { name: "C++", icon: SiCplusplus, color: "#00599c" },
+      { name: "Python", icon: SiPython, color: "#3776ab" },
+    ],
   },
   {
-    name: "Tailwind CSS",
-    icon: SiTailwindcss,
-    color: "#38bdf8",
+    title: "Product engineering",
+    description: "Typed, accessible interfaces and full-stack products.",
+    skills: [
+      { name: "TypeScript", icon: SiTypescript, color: "#3178c6" },
+      { name: "React", icon: SiReact, color: "#61dafb" },
+      { name: "Next.js", icon: SiNextdotjs, color: "var(--foreground)" },
+    ],
   },
   {
-    name: "TypeScript",
-    icon: SiTypescript,
-    color: "#3178c6",
+    title: "Backend & data",
+    description: "APIs, services, and reliable persistence layers.",
+    skills: [
+      { name: "Node.js", icon: SiNodedotjs, color: "#5fa04e" },
+      { name: "PostgreSQL", icon: SiPostgresql, color: "#4169e1" },
+      { name: "MySQL", icon: SiMysql, color: "#4479a1" },
+    ],
   },
   {
-    name: "React",
-    icon: SiReact,
-    color: "#61dafb",
-  },
-  {
-    name: "JavaScript",
-    icon: SiJavascript,
-    color: "#f7df1e",
-  },
-  {
-    name: "Python",
-    icon: SiPython,
-    color: "#3776ab",
-  },
-  {
-    name: "Java",
-    icon: SiOpenjdk,
-    color: "#f89820",
-  },
-  {
-    name: "C",
-    icon: SiC,
-    color: "#a8b9cc",
-  },
-  {
-    name: "C++",
-    icon: SiCplusplus,
-    color: "#00599c",
-  },
-  {
-    name: "HTML5",
-    icon: SiHtml5,
-    color: "#e34f26",
-  },
-  {
-    name: "CSS",
-    icon: SiCss,
-    color: "#663399",
-  },
-  {
-    name: "Node.js",
-    icon: SiNodedotjs,
-    color: "#5fa04e",
-  },
-  {
-    name: "Express.js",
-    icon: SiExpress,
-    color: "var(--foreground)",
-  },
-  {
-    name: "Redux",
-    icon: SiRedux,
-    color: "#764abc",
-  },
-  {
-    name: "shadcn/ui",
-    icon: SiShadcnui,
-    color: "var(--foreground)",
-  },
-  {
-    name: "PostgreSQL",
-    icon: SiPostgresql,
-    color: "#4169e1",
-  },
-  {
-    name: "MySQL",
-    icon: SiMysql,
-    color: "#4479a1",
-  },
-  {
-    name: "MongoDB",
-    icon: SiMongodb,
-    color: "#47a248",
-  },
-  {
-    name: "Prisma",
-    icon: SiPrisma,
-    color: "var(--foreground)",
-  },
-  {
-    name: "Supabase",
-    icon: SiSupabase,
-    color: "#3ecf8e",
-  },
-  {
-    name: "Firebase",
-    icon: SiFirebase,
-    color: "#ffca28",
-  },
-  {
-    name: "Docker",
-    icon: SiDocker,
-    color: "#2496ed",
-  },
-  {
-    name: "Git",
-    icon: SiGit,
-    color: "#f05032",
-  },
-  {
-    name: "GitHub",
-    icon: SiGithub,
-    color: "var(--foreground)",
-  },
-  {
-    name: "Vercel",
-    icon: SiVercel,
-    color: "var(--foreground)",
+    title: "ML & delivery",
+    description: "Research tooling, reproducible models, and automation.",
+    skills: [
+      { name: "PyTorch", icon: SiPytorch, color: "#ee4c2c" },
+      { name: "Docker", icon: SiDocker, color: "#2496ed" },
+      { name: "GitHub Actions", icon: SiGithubactions, color: "#2088ff" },
+    ],
   },
 ]
 
 function SkillsSection() {
   return (
     <section
-      className="mx-auto w-full max-w-5xl py-7"
+      className="mx-auto w-full max-w-5xl py-8"
       aria-labelledby="skills-heading"
     >
-      <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mb-6 grid gap-3 md:grid-cols-[minmax(0,0.7fr)_minmax(18rem,0.45fr)] md:items-end">
         <div>
           <p className="text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
-            Skills
+            Core toolkit
           </p>
           <h2
             id="skills-heading"
-            className="text-xl font-semibold tracking-normal text-foreground"
+            className="mt-2 text-2xl font-semibold tracking-normal text-foreground"
           >
-            Technologies I work with
+            Technologies I use in production
           </h2>
         </div>
+        <p className="max-w-md text-sm leading-6 text-muted-foreground md:justify-self-end">
+          A focused stack shaped by systems work, product delivery, open-source
+          maintenance, and applied machine-learning research.
+        </p>
       </div>
 
-      <div className="flex flex-wrap gap-4">
-        {skills.map((skill) => {
-          const Icon = skill.icon
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {skillGroups.map((group) => (
+          <article
+            key={group.title}
+            className="rounded-lg border border-border/70 bg-card/75 p-4 shadow-sm shadow-foreground/5"
+          >
+            <h3 className="text-sm font-semibold text-foreground">
+              {group.title}
+            </h3>
+            <p className="mt-1 min-h-10 text-xs leading-5 text-muted-foreground">
+              {group.description}
+            </p>
+            <ul className="mt-4 space-y-2">
+              {group.skills.map((skill) => {
+                const Icon = skill.icon
 
-          return (
-            <span
-              key={skill.name}
-              tabIndex={0}
-              aria-label={skill.name}
-              title={skill.name}
-              className="group relative flex size-9 items-center justify-center transition-transform duration-200 hover:-translate-y-0.5 focus-visible:ring-3 focus-visible:ring-ring/40 focus-visible:outline-none"
-            >
-              <Icon
-                aria-hidden="true"
-                className="size-7 transition-transform duration-200 group-hover:scale-110 group-focus-visible:scale-110"
-                style={{ color: skill.color }}
-              />
-              <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 rounded-md bg-popover px-2 py-1 text-xs font-medium whitespace-nowrap text-popover-foreground opacity-0 shadow-sm shadow-foreground/10 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100">
-                {skill.name}
-              </span>
-            </span>
-          )
-        })}
+                return (
+                  <li
+                    key={skill.name}
+                    className="flex items-center gap-2.5 rounded-md bg-muted/55 px-3 py-2 text-sm font-medium text-foreground"
+                  >
+                    <Icon
+                      aria-hidden="true"
+                      className="size-4 shrink-0"
+                      style={{ color: skill.color }}
+                    />
+                    {skill.name}
+                  </li>
+                )
+              })}
+            </ul>
+          </article>
+        ))}
       </div>
     </section>
   )

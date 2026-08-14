@@ -7,6 +7,7 @@ liveUrl: https://devrajsinh-jhala.github.io/Custom-DL-Optimizer/
 codeUrl: https://github.com/Devrajsinh-Jhala/Custom-DL-Optimizer
 packageName: custom-dl-optimizer
 packageRegistry: PyPI
+installCommand: pip install custom-dl-optimizer
 order: 2
 tech:
   - Python
@@ -31,6 +32,16 @@ features:
 Custom DL Optimizer is an open-source Python package for qualifying PyTorch inference plans against a real model, workload, device, and software stack. It compares eligible execution paths, validates each candidate against eager FP32, and retains the trusted baseline unless a challenger clears the configured performance and correctness policy.
 
 The project is intentionally evidence-first. It treats compilation time, first-call latency, steady-state performance, memory use, numerical parity, and expected request volume as separate deployment concerns instead of assuming that every optimization is automatically beneficial.
+
+## Quick start
+
+Install the base package from PyPI:
+
+```bash
+pip install custom-dl-optimizer
+```
+
+The optimizer receives a model and representative inputs, qualifies eligible plans, validates outputs against eager FP32, and returns the selected callable together with an auditable decision report.
 
 ## The Problem
 
@@ -62,6 +73,15 @@ Decision reports preserve runtime provenance, raw measurements, selection reason
 - Optional integrations remain separate so CUDA and compiler stacks can use compatible versions
 - MIT licensed with documentation, security policy, contribution guide, changelog, and citation metadata
 
-## What I Learned
+## Results and impact
 
-This project pushed me beyond implementing an optimization pass and into designing an auditable decision system. It strengthened my understanding of PyTorch execution, compiler tradeoffs, statistical benchmarking, reproducibility, provider interfaces, and the operational evidence required before changing an inference runtime.
+- Published on PyPI with support for Python 3.10 and newer
+- Produces reusable JSON evidence and research-ready performance artifacts
+- Preserves eager FP32 or the native optimized path when challengers fail correctness or confidence policies
+- Exposes provider interfaces for additional runtimes without forcing incompatible compiler dependencies
+
+## Engineering decisions
+
+The project is deliberately a qualification layer rather than another compiler. It measures the execution paths already available in the user’s stack, keeps optional runtimes isolated, and treats setup cost, tail latency, parity, and expected request volume as first-class deployment inputs.
+
+Confidence-bounded selection and cached-plan revalidation keep a benchmark win from silently becoming a production regression.

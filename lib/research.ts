@@ -14,6 +14,11 @@ type ResearchWork = {
   title: string
   published: string
   category: string
+  venue: string
+  publisher: string
+  publicationType: string
+  doi: string
+  authors: string[]
   summary: string
   keywords: string[]
   paperUrl: string
@@ -26,8 +31,18 @@ const researchWorks: ResearchWork[] = [
     slug: "from-brain-signals-to-diagnosis-a-joint-learning-approach-for-adhd-detection",
     title:
       "From Brain Signals to Diagnosis: A Joint Learning Approach for ADHD Detection",
-    published: "December 2025",
-    category: "Research Work",
+    published: "December 2, 2025",
+    category: "IEEE INDISCON 2025",
+    venue: "IEEE India Council International Subsections Conference",
+    publisher: "IEEE",
+    publicationType: "Conference paper",
+    doi: "10.1109/INDISCON66021.2025.11251952",
+    authors: [
+      "Devrajsinh Jhala",
+      "Pranav Sirodaria",
+      "Yogesh Kumar",
+      "Poonam Bhargav",
+    ],
     summary:
       "A deep learning approach to ADHD detection from preprocessed EEG signals, evaluating six joint CNN, LSTM, and GRU architectures for accurate, data-driven diagnosis.",
     keywords: [
@@ -86,9 +101,16 @@ const researchWorks: ResearchWork[] = [
         ],
       },
       {
+        title: "Methodology Context",
+        paragraphs: [
+          "The reported 99.93% accuracy should be read within the paper’s experimental setup rather than as a standalone clinical-performance claim. The public summary establishes the filtering pipeline, ICA artifact removal, six-model comparison, and top-performing multi-head CNN-LSTM architecture, but it does not fully communicate cohort composition or external validation on its own.",
+          "For clinical interpretation, readers should consult the paper for the evaluation protocol and consider subject-wise separation, dataset representativeness, and validation beyond the original cohort. The system is presented as computer-assisted research, not as a replacement for qualified clinical diagnosis.",
+        ],
+      },
+      {
         title: "Final Takeaway",
         paragraphs: [
-          "This work shows that combining disciplined EEG preprocessing with joint spatial and temporal learning can produce highly accurate ADHD classification. The multi-head CNN and LSTM architecture highlights the value of learning complementary signal representations for computer-assisted neurodevelopmental assessment.",
+          "This work shows the promise of combining disciplined EEG preprocessing with joint spatial and temporal learning for computer-assisted ADHD research. The multi-head CNN and LSTM architecture highlights the value of complementary signal representations, while broader clinical use would require independent validation and careful review of the study protocol.",
         ],
       },
     ],
@@ -97,8 +119,19 @@ const researchWorks: ResearchWork[] = [
     slug: "smart-phone-sensor-data-fusion-a-joint-learning-approach-to-activity-recognition",
     title:
       "Smart Phone Sensor Data Fusion: A Joint Learning Approach to Activity Recognition",
-    published: "June 2025",
-    category: "Research Work",
+    published: "December 1, 2024",
+    category: "ICPR 2024",
+    venue: "International Conference on Pattern Recognition",
+    publisher: "Springer Nature",
+    publicationType: "Conference paper",
+    doi: "10.1007/978-3-031-88217-3_8",
+    authors: [
+      "Devraj Jhala",
+      "Bhargav Nadiadra",
+      "Chintan M. Bhatt",
+      "Alessandro Bruno",
+      "Salvatore Sorce",
+    ],
     summary:
       "A deep learning system for smartphone-based human activity recognition using accelerometer and gyroscope data, comparing a Full Transformer model with a proposed Joint Learning fusion architecture.",
     keywords: [
@@ -186,8 +219,20 @@ const researchWorks: ResearchWork[] = [
     slug: "icgnis-2023",
     title:
       "Early Prediction of Down Syndrome Using Deep Transfer Learning-Based Approaches",
-    published: "June 2025",
-    category: "Research Work",
+    published: "July 4, 2024",
+    category: "ICNGCIS 2023",
+    venue:
+      "2nd International Conference on Next Generation Computing and Information Systems",
+    publisher: "Taylor & Francis",
+    publicationType: "Book chapter",
+    doi: "10.1201/9781003466383-31",
+    authors: [
+      "Nirmit Patel",
+      "Tarang Ghetia",
+      "Devraj Jhala",
+      "Shubh Kapadia",
+      "Yogesh Kumar",
+    ],
     summary:
       "A transfer learning study for early Down Syndrome screening from facial images using multiple pre-trained CNN architectures and targeted fine-tuning.",
     keywords: [
@@ -254,8 +299,20 @@ const researchWorks: ResearchWork[] = [
     slug: "non-contact-inspection-of-electrically-discharged-materials-using-machine-learning",
     title:
       "Non-contact Inspection of Electrically Discharged Materials Using Machine Learning",
-    published: "July 2024",
-    category: "Research Work",
+    published: "July 11, 2024",
+    category: "FLUTE 2023",
+    venue: "Advances in Manufacturing and Materials",
+    publisher: "Springer Nature",
+    publicationType: "Conference paper",
+    doi: "10.1007/978-981-97-3173-2_11",
+    authors: [
+      "Devrajsinh Jhala",
+      "Nirmit Patel",
+      "Jemil Dharia",
+      "Jemin Butani",
+      "Devesh Patel",
+      "M. B. Kiran",
+    ],
     summary:
       "A machine learning approach for predicting surface roughness in EDM-machined materials using process parameters instead of contact-based inspection.",
     keywords: [
@@ -265,8 +322,7 @@ const researchWorks: ResearchWork[] = [
       "Regression",
       "Non-contact Inspection",
     ],
-    paperUrl:
-      "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=GmIpPnIAAAAJ&citation_for_view=GmIpPnIAAAAJ:u-x6o8ySG0sC",
+    paperUrl: "https://link.springer.com/chapter/10.1007/978-981-97-3173-2_11",
     metrics: [
       { label: "Best model", value: "KNN" },
       { label: "R2 score", value: "~0.999" },

@@ -7,6 +7,7 @@ liveUrl: https://devrajsinh-jhala.github.io/NPM-Vibe-check/
 codeUrl: https://github.com/Devrajsinh-Jhala/NPM-Vibe-check
 packageName: npx-vibe
 packageRegistry: npm
+installCommand: npx npx-vibe --check esbuild
 order: 3
 tech:
   - Node.js
@@ -31,6 +32,20 @@ features:
 npx-vibe is an open-source npm package that adds a visible security checkpoint before unfamiliar package code runs. It resolves an exact version, downloads the tarball without executing it, verifies npm integrity metadata, inspects bounded source files, and returns evidence with a risk verdict.
 
 The default scan is deterministic, local, and requires no account or API key. Optional AI interpretation is explicitly opt-in, while the core decision remains grounded in registry data, package contents, and reproducible findings.
+
+## Quick start
+
+Review a package without executing it:
+
+```bash
+npx npx-vibe --check esbuild
+```
+
+Use the CLI as a guarded replacement for an ordinary npx command:
+
+```bash
+npx npx-vibe cowsay -- hello from npx-vibe
+```
 
 ## Why It Exists
 
@@ -63,6 +78,15 @@ Version 1.5 also includes a zero-dependency, read-only MCP server with tools for
 - Optional AI providers and selected models are disclosed in the result
 - API keys are excluded from MCP tool arguments and prompt history
 
-## What I Learned
+## Results and impact
 
-npx-vibe brought together package management, supply-chain security, archive validation, static heuristics, CLI design, structured agent interfaces, MCP integration, and safe human-in-the-loop decisions. It also taught me how to design a security tool that communicates evidence and uncertainty instead of relying on an unexplained score.
+- Published to npm with live adoption tracked through the public registry API
+- Listed in the official MCP Registry with a native read-only MCP server
+- Supports human-readable terminal decisions and a stable JSON contract for coding agents
+- Keeps deterministic evidence available without requiring an account, API key, or AI provider
+
+## Engineering decisions
+
+The central design decision was to make the deterministic scan authoritative and AI interpretation optional. Package code is inspected without execution, hard limits bound archive and source analysis, and the result explains uncertainty instead of hiding it behind an unexplained score.
+
+The project also separates human and agent interfaces. Terminal output is optimized for review, while agent mode uses a stable, fail-closed decision envelope that automation can consume without parsing prose.

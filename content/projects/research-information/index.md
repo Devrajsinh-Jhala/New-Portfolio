@@ -1,6 +1,6 @@
 ---
 title: Research Information
-published: June 26, 2025
+published: May 4, 2023
 category: Full Stack Project
 summary: A university project for discovering research grants and scholarships with search, tags, pagination, monthly ISR, and Sanity-powered content management.
 liveUrl: https://research-information.vercel.app/
@@ -41,6 +41,6 @@ The idea came from a Government of India hackathon problem statement that asked 
 - Frontend: Next.js, Tailwind CSS, TypeScript
 - Backend and content: Sanity CMS
 
-## What I Learned
+## Engineering takeaways
 
 This project helped me think through content-heavy product design, especially how search, tags, pagination, and long revalidation windows can make large information systems easier to maintain.

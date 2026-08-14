@@ -14,12 +14,20 @@ type MarkdownBlock =
       type: "list"
       items: string[]
     }
+  | {
+      type: "code"
+      language?: string
+      code: string
+    }
 
 function parseMarkdown(markdown: string) {
   const blocks: MarkdownBlock[] = []
   const lines = markdown.split(/\r?\n/)
   let paragraph: string[] = []
   let list: string[] = []
+  let code: string[] = []
+  let codeLanguage: string | undefined
+  let isCodeBlock = false
 
   function flushParagraph() {
     if (paragraph.length) {
@@ -41,8 +49,38 @@ function parseMarkdown(markdown: string) {
     }
   }
 
+  function flushCode() {
+    if (code.length) {
+      blocks.push({
+        type: "code",
+        language: codeLanguage,
+        code: code.join("\n"),
+      })
+      code = []
+      codeLanguage = undefined
+    }
+  }
+
   for (const line of lines) {
     const trimmed = line.trim()
+
+    if (trimmed.startsWith("```")) {
+      if (isCodeBlock) {
+        flushCode()
+        isCodeBlock = false
+      } else {
+        flushParagraph()
+        flushList()
+        codeLanguage = trimmed.slice(3).trim() || undefined
+        isCodeBlock = true
+      }
+      continue
+    }
+
+    if (isCodeBlock) {
+      code.push(line)
+      continue
+    }
 
     if (!trimmed) {
       flushParagraph()
@@ -77,6 +115,7 @@ function parseMarkdown(markdown: string) {
 
   flushParagraph()
   flushList()
+  flushCode()
 
   return blocks
 }
@@ -122,6 +161,24 @@ function ProjectMarkdown({ markdown }: { markdown: string }) {
                 </li>
               ))}
             </ul>
+          )
+        }
+
+        if (block.type === "code") {
+          return (
+            <div
+              key={`code-${index}`}
+              className="overflow-hidden rounded-lg border border-border/70 bg-zinc-950 shadow-sm"
+            >
+              {block.language ? (
+                <div className="border-b border-white/10 px-4 py-2 font-mono text-[0.65rem] tracking-[0.12em] text-zinc-400 uppercase">
+                  {block.language}
+                </div>
+              ) : null}
+              <pre className="overflow-x-auto p-4 text-xs leading-6 text-zinc-100 sm:text-sm">
+                <code>{block.code}</code>
+              </pre>
+            </div>
           )
         }
 
