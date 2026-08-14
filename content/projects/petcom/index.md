@@ -1,6 +1,6 @@
 ---
 title: Petcom
-published: June 26, 2025
+published: June 26, 2023
 category: Full Stack Project
 summary: A Reddit-inspired community application for pet lovers with communities, posts, nested comments, voting, custom feeds, uploads, and advanced caching.
 liveUrl: https://petcom.vercel.app/
@@ -50,6 +50,6 @@ The idea came after seeing discussions around community platforms and the value 
 - Storage and caching: UploadThing, Upstash Redis
 - Authentication: NextAuth
 
-## What I Learned
+## Engineering takeaways
 
 Petcom was one of the most useful projects for understanding full-stack product behavior. It involved feeds, caching, communities, voting, nested comments, authenticated personalization, and user-generated content.

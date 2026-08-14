@@ -1,6 +1,6 @@
 ---
 title: ACM PDEU Website
-published: June 26, 2025
+published: May 22, 2023
 category: Full Stack Project
 summary: A full-stack website for the ACM PDEU Student Chapter with Sanity-managed content, authentication, blog workflows, ISR, and a polished chapter presence.
 liveUrl: https://acm-web.vercel.app/
@@ -45,6 +45,6 @@ I created a raw mock-up for the application so the team had a clear direction be
 - Server and content: Next.js Server Components, Sanity CMS v3
 - Other tools: React Hot Toast, EmailJS, React Typewriter Effect, Framer Motion
 
-## What I Learned
+## Engineering takeaways
 
 This project strengthened my understanding of real team workflows, CMS-based content architecture, and the practical tradeoffs of static regeneration when content updates are controlled by admins.

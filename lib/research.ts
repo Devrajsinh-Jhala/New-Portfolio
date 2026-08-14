@@ -14,6 +14,11 @@ type ResearchWork = {
   title: string
   published: string
   category: string
+  venue: string
+  publisher: string
+  publicationType: string
+  doi: string
+  authors: string[]
   summary: string
   keywords: string[]
   paperUrl: string
@@ -23,11 +28,110 @@ type ResearchWork = {
 
 const researchWorks: ResearchWork[] = [
   {
+    slug: "from-brain-signals-to-diagnosis-a-joint-learning-approach-for-adhd-detection",
+    title:
+      "From Brain Signals to Diagnosis: A Joint Learning Approach for ADHD Detection",
+    published: "December 2, 2025",
+    category: "IEEE INDISCON 2025",
+    venue: "IEEE India Council International Subsections Conference",
+    publisher: "IEEE",
+    publicationType: "Conference paper",
+    doi: "10.1109/INDISCON66021.2025.11251952",
+    authors: [
+      "Devrajsinh Jhala",
+      "Pranav Sirodaria",
+      "Yogesh Kumar",
+      "Poonam Bhargav",
+    ],
+    summary:
+      "A deep learning approach to ADHD detection from preprocessed EEG signals, evaluating six joint CNN, LSTM, and GRU architectures for accurate, data-driven diagnosis.",
+    keywords: [
+      "ADHD Detection",
+      "EEG",
+      "Deep Learning",
+      "CNN-LSTM",
+      "Joint Learning",
+    ],
+    paperUrl: "https://ieeexplore.ieee.org/document/11251952",
+    metrics: [
+      { label: "Best accuracy", value: "99.93%" },
+      { label: "Architectures", value: "6" },
+      { label: "Band-pass range", value: "4-40 Hz" },
+    ],
+    sections: [
+      {
+        title: "Overview",
+        paragraphs: [
+          "This research investigated an objective, data-driven approach to detecting Attention-Deficit/Hyperactivity Disorder using electroencephalogram signals recorded from electrodes placed around the brain. The study applied deep learning to learn diagnostic patterns directly from carefully preprocessed EEG data.",
+          "Six joint learning architectures were designed by combining Convolutional Neural Networks, Long Short-Term Memory networks, and Gated Recurrent Units. These architectures were evaluated to determine which combination most effectively captured the spatial and temporal characteristics of EEG signals associated with ADHD.",
+        ],
+      },
+      {
+        title: "Motivation",
+        paragraphs: [
+          "ADHD is a common neurodevelopmental disorder that is typically diagnosed during childhood. Conventional detection often depends heavily on questionnaires and behavioral assessments, which can make the process subjective.",
+          "EEG analysis offers a non-invasive alternative that can support diagnosis with measurable brain-signal data. The work explored how effective signal preprocessing and joint deep learning models can make that analysis more accurate and reliable.",
+        ],
+      },
+      {
+        title: "EEG Preprocessing",
+        paragraphs: [
+          "The EEG signals were prepared before model training to reduce noise and isolate the frequencies most relevant to the analysis. This preprocessing pipeline was an important part of the study because raw EEG recordings commonly contain electrical interference and non-neural artifacts.",
+        ],
+        bullets: [
+          "Applied a 4-40 Hz band-pass filter to retain the target EEG frequency range.",
+          "Used notch filtering to reduce electrical interference.",
+          "Removed artifacts through Independent Component Analysis.",
+        ],
+      },
+      {
+        title: "Joint Learning Architectures",
+        paragraphs: [
+          "The study developed six architectures that jointly combined CNN, LSTM, and GRU components. CNN branches were used to learn local signal features, while recurrent LSTM and GRU components modeled temporal dependencies within the EEG recordings.",
+          "Testing multiple joint configurations made it possible to compare how different spatial and sequential learning strategies affected ADHD classification performance.",
+        ],
+      },
+      {
+        title: "Key Findings",
+        bullets: [
+          "The best-performing architecture combined a multi-head CNN with a multi-head LSTM.",
+          "The top joint learning model achieved 99.93% classification accuracy.",
+          "Careful EEG filtering and ICA-based artifact removal supported reliable feature learning.",
+          "The results demonstrate the potential of EEG-based deep learning as an objective aid for ADHD detection.",
+        ],
+      },
+      {
+        title: "Methodology Context",
+        paragraphs: [
+          "The reported 99.93% accuracy should be read within the paper’s experimental setup rather than as a standalone clinical-performance claim. The public summary establishes the filtering pipeline, ICA artifact removal, six-model comparison, and top-performing multi-head CNN-LSTM architecture, but it does not fully communicate cohort composition or external validation on its own.",
+          "For clinical interpretation, readers should consult the paper for the evaluation protocol and consider subject-wise separation, dataset representativeness, and validation beyond the original cohort. The system is presented as computer-assisted research, not as a replacement for qualified clinical diagnosis.",
+        ],
+      },
+      {
+        title: "Final Takeaway",
+        paragraphs: [
+          "This work shows the promise of combining disciplined EEG preprocessing with joint spatial and temporal learning for computer-assisted ADHD research. The multi-head CNN and LSTM architecture highlights the value of complementary signal representations, while broader clinical use would require independent validation and careful review of the study protocol.",
+        ],
+      },
+    ],
+  },
+  {
     slug: "smart-phone-sensor-data-fusion-a-joint-learning-approach-to-activity-recognition",
     title:
       "Smart Phone Sensor Data Fusion: A Joint Learning Approach to Activity Recognition",
-    published: "June 2025",
-    category: "Research Work",
+    published: "December 1, 2024",
+    category: "ICPR 2024",
+    venue: "International Conference on Pattern Recognition",
+    publisher: "Springer Nature",
+    publicationType: "Conference paper",
+    doi: "10.1007/978-3-031-88217-3_8",
+    authors: [
+      "Devraj Jhala",
+      "Bhargav Nadiadra",
+      "Chintan M. Bhatt",
+      "Alessandro Bruno",
+      "Salvatore Sorce",
+    ],
     summary:
       "A deep learning system for smartphone-based human activity recognition using accelerometer and gyroscope data, comparing a Full Transformer model with a proposed Joint Learning fusion architecture.",
     keywords: [
@@ -115,8 +219,20 @@ const researchWorks: ResearchWork[] = [
     slug: "icgnis-2023",
     title:
       "Early Prediction of Down Syndrome Using Deep Transfer Learning-Based Approaches",
-    published: "June 2025",
-    category: "Research Work",
+    published: "July 4, 2024",
+    category: "ICNGCIS 2023",
+    venue:
+      "2nd International Conference on Next Generation Computing and Information Systems",
+    publisher: "Taylor & Francis",
+    publicationType: "Book chapter",
+    doi: "10.1201/9781003466383-31",
+    authors: [
+      "Nirmit Patel",
+      "Tarang Ghetia",
+      "Devraj Jhala",
+      "Shubh Kapadia",
+      "Yogesh Kumar",
+    ],
     summary:
       "A transfer learning study for early Down Syndrome screening from facial images using multiple pre-trained CNN architectures and targeted fine-tuning.",
     keywords: [
@@ -183,8 +299,20 @@ const researchWorks: ResearchWork[] = [
     slug: "non-contact-inspection-of-electrically-discharged-materials-using-machine-learning",
     title:
       "Non-contact Inspection of Electrically Discharged Materials Using Machine Learning",
-    published: "July 2024",
-    category: "Research Work",
+    published: "July 11, 2024",
+    category: "FLUTE 2023",
+    venue: "Advances in Manufacturing and Materials",
+    publisher: "Springer Nature",
+    publicationType: "Conference paper",
+    doi: "10.1007/978-981-97-3173-2_11",
+    authors: [
+      "Devrajsinh Jhala",
+      "Nirmit Patel",
+      "Jemil Dharia",
+      "Jemin Butani",
+      "Devesh Patel",
+      "M. B. Kiran",
+    ],
     summary:
       "A machine learning approach for predicting surface roughness in EDM-machined materials using process parameters instead of contact-based inspection.",
     keywords: [
@@ -194,8 +322,7 @@ const researchWorks: ResearchWork[] = [
       "Regression",
       "Non-contact Inspection",
     ],
-    paperUrl:
-      "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=GmIpPnIAAAAJ&citation_for_view=GmIpPnIAAAAJ:u-x6o8ySG0sC",
+    paperUrl: "https://link.springer.com/chapter/10.1007/978-981-97-3173-2_11",
     metrics: [
       { label: "Best model", value: "KNN" },
       { label: "R2 score", value: "~0.999" },

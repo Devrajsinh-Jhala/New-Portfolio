@@ -40,6 +40,7 @@ export async function generateMetadata({
   return {
     title: work.title,
     description: work.summary,
+    alternates: { canonical: `/research/${work.slug}` },
   }
 }
 
@@ -60,8 +61,34 @@ export default async function ResearchDetailPage({
     notFound()
   }
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    headline: work.title,
+    description: work.summary,
+    datePublished: work.published,
+    author: work.authors.map((name) => ({
+      "@type": "Person",
+      name,
+    })),
+    publisher: {
+      "@type": "Organization",
+      name: work.publisher,
+    },
+    isPartOf: work.venue,
+    sameAs: `https://doi.org/${work.doi}`,
+    url: work.paperUrl,
+    keywords: work.keywords.join(", "),
+  }
+
   return (
     <article className="mx-auto w-full max-w-5xl py-5 sm:py-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <div className="mb-8">
         <Button asChild variant="ghost" className="h-8 px-2 text-sm">
           <Link href="/research">
@@ -91,9 +118,15 @@ export default async function ResearchDetailPage({
             <p className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base sm:leading-8">
               {work.summary}
             </p>
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground">
+              {work.authors.join(", ")}
+            </p>
           </div>
 
-          <Button asChild className="w-fit justify-self-start lg:justify-self-end">
+          <Button
+            asChild
+            className="w-fit justify-self-start lg:justify-self-end"
+          >
             <a href={work.paperUrl} target="_blank" rel="noreferrer">
               Read paper
               <ExternalLink aria-hidden="true" data-icon="inline-end" />
@@ -152,6 +185,41 @@ export default async function ResearchDetailPage({
               Paper snapshot
             </h2>
             <dl className="mt-4 space-y-3">
+              <div>
+                <dt className="text-[0.68rem] font-medium tracking-[0.12em] text-muted-foreground uppercase">
+                  Venue
+                </dt>
+                <dd className="mt-1 text-sm font-semibold text-foreground">
+                  {work.venue}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[0.68rem] font-medium tracking-[0.12em] text-muted-foreground uppercase">
+                  Publisher
+                </dt>
+                <dd className="mt-1 text-sm font-semibold text-foreground">
+                  {work.publisher}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[0.68rem] font-medium tracking-[0.12em] text-muted-foreground uppercase">
+                  DOI
+                </dt>
+                <dd className="mt-1 text-sm font-semibold break-all text-foreground">
+                  <a
+                    href={`https://doi.org/${work.doi}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-start gap-1 hover:underline"
+                  >
+                    {work.doi}
+                    <ExternalLink
+                      aria-hidden="true"
+                      className="mt-0.5 size-3 shrink-0"
+                    />
+                  </a>
+                </dd>
+              </div>
               {work.metrics.map((metric) => (
                 <div key={metric.label}>
                   <dt className="text-[0.68rem] font-medium tracking-[0.12em] text-muted-foreground uppercase">

@@ -8,6 +8,9 @@ type ProjectFrontmatter = {
   summary: string
   liveUrl?: string
   codeUrl?: string
+  packageName?: string
+  packageRegistry?: "PyPI" | "npm"
+  installCommand?: string
   order: number
   tech: string[]
   features: string[]
@@ -143,6 +146,22 @@ function optionalStringField(
   return typeof value === "string" && value ? value : undefined
 }
 
+function optionalPackageRegistry(
+  data: Record<string, string | number | string[]>
+) {
+  const value = optionalStringField(data, "packageRegistry")
+
+  if (!value) {
+    return undefined
+  }
+
+  if (value !== "PyPI" && value !== "npm") {
+    throw new Error('Project "packageRegistry" must be either "PyPI" or "npm"')
+  }
+
+  return value
+}
+
 function getProjectFromDirectory(slug: string): Project {
   const filePath = path.join(projectsDirectory, slug, "index.md")
   const source = fs.readFileSync(filePath, "utf8")
@@ -156,6 +175,9 @@ function getProjectFromDirectory(slug: string): Project {
     summary: stringField(data, "summary"),
     liveUrl: optionalStringField(data, "liveUrl"),
     codeUrl: optionalStringField(data, "codeUrl"),
+    packageName: optionalStringField(data, "packageName"),
+    packageRegistry: optionalPackageRegistry(data),
+    installCommand: optionalStringField(data, "installCommand"),
     order: numberField(data, "order"),
     tech: arrayField(data, "tech"),
     features: arrayField(data, "features"),
@@ -170,7 +192,11 @@ function getProjectSlugs() {
 
   return fs
     .readdirSync(projectsDirectory, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
+    .filter(
+      (entry) =>
+        entry.isDirectory() &&
+        fs.existsSync(path.join(projectsDirectory, entry.name, "index.md"))
+    )
     .map((entry) => entry.name)
 }
 

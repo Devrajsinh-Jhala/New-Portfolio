@@ -6,14 +6,30 @@ type Experience = {
   period: string
   location?: string
   highlights?: string[]
+  current?: boolean
 }
 
 const experiences: Experience[] = [
   {
     company: "MediaTek",
+    role: "Senior Software Engineer",
+    period: "July 2026 - Present",
+    location: "Bengaluru, Karnataka, India · On-site",
+    current: true,
+    highlights: [
+      "Contributing to system software across UEFI and USB subsystems for MediaTek platforms.",
+      "Promoted from Software Engineer Intern to Senior Software Engineer in July 2026.",
+    ],
+  },
+  {
+    company: "MediaTek",
     role: "Software Engineer Intern",
-    period: "January 2026 - Present",
-    location: "Bengaluru, Karnataka, India",
+    period: "January 2026 - July 2026",
+    location: "Bengaluru, Karnataka, India · On-site",
+    highlights: [
+      "Worked on software development in C and C++ with exposure to UEFI and USB platform components.",
+      "Built the platform context and engineering foundation that led to a full-time promotion.",
+    ],
   },
   {
     company: "Thinkbyte Technologies",
@@ -63,6 +79,7 @@ const experiences: Experience[] = [
 function ExperienceSection() {
   return (
     <section
+      id="experience"
       className="mx-auto w-full max-w-5xl py-7"
       aria-labelledby="experience-heading"
     >
@@ -74,7 +91,7 @@ function ExperienceSection() {
           id="experience-heading"
           className="text-xl font-semibold tracking-normal text-foreground"
         >
-          Work timeline
+          Professional experience
         </h2>
       </div>
 
@@ -131,6 +148,11 @@ function ExperienceHeader({ experience }: { experience: Experience }) {
       <div className="min-w-0">
         <h3 className="text-base font-semibold tracking-normal text-foreground">
           {experience.role}
+          {experience.current ? (
+            <span className="ms-2 inline-flex rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2 py-0.5 align-middle text-[0.65rem] font-semibold tracking-[0.08em] text-emerald-700 uppercase dark:text-emerald-300">
+              Current
+            </span>
+          ) : null}
         </h3>
         <p className="mt-1 text-sm font-medium text-muted-foreground">
           {experience.company}

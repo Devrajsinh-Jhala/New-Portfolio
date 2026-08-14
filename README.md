@@ -1,6 +1,6 @@
-# Devraj Jhala Portfolio
+# Devrajsinh Jhala Portfolio
 
-A personal portfolio for Devrajsinh Jhala, built with Next.js, React, TypeScript, Tailwind CSS, and shadcn/ui. The site presents selected project work, research publications, professional experience, skills, social links, a GitHub contribution graph, theme switching, and a lightweight visitor counter.
+A personal portfolio for Devrajsinh Jhala, built with Next.js, React, TypeScript, Tailwind CSS, and shadcn/ui. The site presents maintained open-source tools, selected product work, research publications, professional experience, focused skills, live package metrics, and a GitHub contribution graph.
 
 This repository uses the Next.js App Router and the installed Next.js version is newer than many older examples online. Before changing Next-specific code, read the relevant local docs in `node_modules/next/dist/docs/` and follow the note in `AGENTS.md`.
 
@@ -22,16 +22,16 @@ This repository uses the Next.js App Router and the installed Next.js version is
 
 ## Features
 
-- Home page with profile hero, animated role text, CV link, writing link, social links, GitHub activity graph, skills, and work timeline.
+- Home page with professional positioning, a direct résumé and contact path, live package impact, GitHub activity, focused skills, and a work timeline.
 - About page with a personal story, profile highlights, CV download, contact action, and interests beyond code.
 - Project archive generated from Markdown files in `content/projects`.
 - Individual project pages with metadata, live/code links, tech stack, feature count, table of contents, and rendered project writeups.
 - Research archive generated from typed research data in `lib/research.ts`.
 - Individual research pages with paper links, metrics, keywords, and structured sections.
-- Sticky responsive navigation for Home, About, Projects, and Research.
+- Sticky responsive navigation with a personal wordmark and active-route state.
 - System-aware dark/light theme powered by `next-themes`, with a theme toggle and `d` keyboard shortcut.
 - GitHub contribution graph powered by the GitHub GraphQL API.
-- Site-wide visitor counter powered by an external page views API.
+- Search and social metadata with canonical URLs, Open Graph and X previews, JSON-LD, sitemap, robots, and a web manifest.
 - Vercel Analytics integration through `@vercel/analytics`.
 
 ## Tech Stack
@@ -43,7 +43,6 @@ This repository uses the Next.js App Router and the installed Next.js version is
 - UI primitives and utilities: Radix UI, class-variance-authority, clsx, tailwind-merge
 - Icons: lucide-react and react-icons
 - Theme management: next-themes
-- Animation: motion
 - Analytics: Vercel Analytics
 - Package manager: npm with `package-lock.json`
 
@@ -93,7 +92,6 @@ Add the variables you need:
 ```env
 GITHUB_USERNAME=your-github-username
 GITHUB_TOKEN=github_pat_your-token
-NEXT_PUBLIC_PAGE_VIEWS_SITE_ID=devraj-jhala-portfolio
 ```
 
 ### Run Locally
@@ -121,14 +119,12 @@ Store local values in `.env.local`.
 | --- | --- | --- | --- |
 | `GITHUB_USERNAME` | Recommended | Server only | GitHub username used by the contribution graph. |
 | `GITHUB_TOKEN` | Recommended | Server only | GitHub GraphQL API token used to fetch contribution data. Do not expose this in the browser. |
-| `NEXT_PUBLIC_PAGE_VIEWS_SITE_ID` | Optional | Browser | Stable site identifier for the visitor counter API. Defaults to `devraj-jhala-portfolio` when omitted. |
 
 Notes:
 
 - Keep `.env.local` private. The repo ignores `.env*` files.
 - Variables without `NEXT_PUBLIC_` stay server-side in Next.js.
 - The contribution graph calls `connection()` before reading GitHub env vars so runtime deployment values can be used.
-- `NEXT_PUBLIC_PAGE_VIEWS_SITE_ID` is public by design and may be embedded in the client bundle.
 
 ## Available Scripts
 
@@ -182,7 +178,7 @@ Edit `lib/site-metadata.ts` to update the name used in generated page titles.
 
 The home page composes section components from `sections/`.
 
-- `sections/HeroSection.tsx`: profile image, role text, short bio, CV link, writing link, and social actions.
+- `sections/HeroSection.tsx`: professional portrait, senior role, focus areas, résumé, project, contact, and social actions.
 - `sections/GithubCommitGraph.tsx`: GitHub contribution graph, loading skeleton, API request, cache interval, and fallback states.
 - `sections/SkillsSection.tsx`: skill list, icons, and icon colors.
 - `sections/ExperienceSection.tsx`: work timeline, company details, periods, locations, and highlights.
@@ -197,7 +193,7 @@ Edit `app/about/page.tsx` to update:
 - Interests beyond code
 - CV and contact actions
 
-Profile images are in `public/images/`.
+The optimized profile image is in `public/images/`; the locally hosted résumé and social preview are in `public/`.
 
 ### Projects
 
@@ -213,6 +209,9 @@ category: Full Stack Project
 summary: Short summary shown in project cards and metadata.
 liveUrl: https://example.com
 codeUrl: https://github.com/user/repo
+# Optional for published packages:
+packageName: example-package
+packageRegistry: npm
 order: 1
 tech:
   - Next.js
@@ -238,6 +237,8 @@ Project behavior:
 - The folder name becomes the slug, for example `content/projects/petcom/index.md` maps to `/projects/petcom`.
 - `getProjects()` sorts projects by most recent `published` date first, then by `order`.
 - `liveUrl` and `codeUrl` are optional. Buttons only render when the fields exist.
+- `packageName` and `packageRegistry` are optional. Use `PyPI` or `npm` for the registry value to enable package metrics on cards and detail pages.
+- Package versions, rolling 30-day downloads, and latest release dates are loaded through `lib/package-stats.ts` and refreshed daily, with verified fallback values for registry outages.
 - `tech` appears in cards and the project detail sidebar.
 - `features` is used for feature counts and project snapshot metadata.
 - The custom Markdown renderer supports `##` headings, `###` headings, paragraphs, and `-` unordered lists.
@@ -292,17 +293,6 @@ Flow:
 
 The fetch request uses `next: { revalidate: 60 * 60 }`, so successful API data can be revalidated hourly.
 
-### Visitor Counter
-
-`components/page-visitor-counter.tsx` is a client component.
-
-Flow:
-
-1. It tracks the site-wide `/` path through the page views API.
-2. It fetches the current view count.
-3. It renders an ordinal message such as `You are the 123rd visitor`.
-4. If the API fails, it renders `Visitor count unavailable`.
-
 ### Project Markdown
 
 `lib/projects.ts` reads project files from disk and parses frontmatter with a small custom parser. `components/project-markdown.tsx` renders the supported Markdown blocks into styled React elements.
@@ -326,7 +316,7 @@ Recommended Vercel settings:
 - Install command: `npm install`
 - Build command: `npm run build`
 - Output: handled automatically by Next.js/Vercel
-- Environment variables: set `GITHUB_USERNAME`, `GITHUB_TOKEN`, and optionally `NEXT_PUBLIC_PAGE_VIEWS_SITE_ID`
+- Environment variables: set `GITHUB_USERNAME` and `GITHUB_TOKEN`
 
 For another Node.js host:
 
@@ -374,12 +364,6 @@ npx next typegen
 - Confirm `GITHUB_TOKEN` is set and valid for GitHub GraphQL requests.
 - Restart the dev server after changing `.env.local`.
 - Check GitHub API rate limits or token permissions.
-
-### Visitor counter says unavailable
-
-- Confirm the browser can reach `https://page-views-api.ratneshc.com/api/v1`.
-- Confirm `NEXT_PUBLIC_PAGE_VIEWS_SITE_ID` is stable across deployments if you want shared counts.
-- The site still works if the visitor API fails.
 
 ### TypeScript reports missing generated route types
 
