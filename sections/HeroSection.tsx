@@ -9,9 +9,9 @@ import { socialLinks } from "@/lib/profile"
 
 const heroContent = {
   name: "Devrajsinh Jhala",
-  roles: ["Software Engineer", "Badminton Freak", "Inconsistent Gym Goer"],
+  roles: ["Software Engineer", "Open-source Builder", "AI/ML Researcher"],
   description:
-    "Full-stack developer building clean, scalable web applications with React, Next.js, TypeScript, and a growing interest in AI-powered systems.",
+    "Software engineer building full-stack products and open-source developer tools across TypeScript, Python, machine learning, and research workflows.",
   actions: {
     primary: {
       label: "View my CV",

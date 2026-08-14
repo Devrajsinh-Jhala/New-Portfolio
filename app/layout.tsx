@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: `%s - ${siteTitleName}`,
   },
   description:
-    "Portfolio of Devraj Jhala, a full-stack developer building practical web experiences with Next.js, React, and TypeScript.",
+    "Portfolio of Devrajsinh Jhala, a software engineer and open-source developer building full-stack products, machine-learning tools, and research software.",
 }
 
 export default function RootLayout({

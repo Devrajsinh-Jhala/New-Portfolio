@@ -1,3 +1,3 @@
-const siteTitleName = "Devraj Jhala"
+const siteTitleName = "Devrajsinh Jhala"
 
 export { siteTitleName }

@@ -11,9 +11,15 @@ type Experience = {
 const experiences: Experience[] = [
   {
     company: "MediaTek",
+    role: "Senior Software Engineer",
+    period: "July 2026 - Present",
+    location: "Bengaluru, Karnataka, India · On-site",
+  },
+  {
+    company: "MediaTek",
     role: "Software Engineer Intern",
-    period: "January 2026 - Present",
-    location: "Bengaluru, Karnataka, India",
+    period: "January 2026 - July 2026",
+    location: "Bengaluru, Karnataka, India · On-site",
   },
   {
     company: "Thinkbyte Technologies",
@@ -63,6 +69,7 @@ const experiences: Experience[] = [
 function ExperienceSection() {
   return (
     <section
+      id="experience"
       className="mx-auto w-full max-w-5xl py-7"
       aria-labelledby="experience-heading"
     >

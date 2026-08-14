@@ -23,6 +23,77 @@ type ResearchWork = {
 
 const researchWorks: ResearchWork[] = [
   {
+    slug: "from-brain-signals-to-diagnosis-a-joint-learning-approach-for-adhd-detection",
+    title:
+      "From Brain Signals to Diagnosis: A Joint Learning Approach for ADHD Detection",
+    published: "December 2025",
+    category: "Research Work",
+    summary:
+      "A deep learning approach to ADHD detection from preprocessed EEG signals, evaluating six joint CNN, LSTM, and GRU architectures for accurate, data-driven diagnosis.",
+    keywords: [
+      "ADHD Detection",
+      "EEG",
+      "Deep Learning",
+      "CNN-LSTM",
+      "Joint Learning",
+    ],
+    paperUrl: "https://ieeexplore.ieee.org/document/11251952",
+    metrics: [
+      { label: "Best accuracy", value: "99.93%" },
+      { label: "Architectures", value: "6" },
+      { label: "Band-pass range", value: "4-40 Hz" },
+    ],
+    sections: [
+      {
+        title: "Overview",
+        paragraphs: [
+          "This research investigated an objective, data-driven approach to detecting Attention-Deficit/Hyperactivity Disorder using electroencephalogram signals recorded from electrodes placed around the brain. The study applied deep learning to learn diagnostic patterns directly from carefully preprocessed EEG data.",
+          "Six joint learning architectures were designed by combining Convolutional Neural Networks, Long Short-Term Memory networks, and Gated Recurrent Units. These architectures were evaluated to determine which combination most effectively captured the spatial and temporal characteristics of EEG signals associated with ADHD.",
+        ],
+      },
+      {
+        title: "Motivation",
+        paragraphs: [
+          "ADHD is a common neurodevelopmental disorder that is typically diagnosed during childhood. Conventional detection often depends heavily on questionnaires and behavioral assessments, which can make the process subjective.",
+          "EEG analysis offers a non-invasive alternative that can support diagnosis with measurable brain-signal data. The work explored how effective signal preprocessing and joint deep learning models can make that analysis more accurate and reliable.",
+        ],
+      },
+      {
+        title: "EEG Preprocessing",
+        paragraphs: [
+          "The EEG signals were prepared before model training to reduce noise and isolate the frequencies most relevant to the analysis. This preprocessing pipeline was an important part of the study because raw EEG recordings commonly contain electrical interference and non-neural artifacts.",
+        ],
+        bullets: [
+          "Applied a 4-40 Hz band-pass filter to retain the target EEG frequency range.",
+          "Used notch filtering to reduce electrical interference.",
+          "Removed artifacts through Independent Component Analysis.",
+        ],
+      },
+      {
+        title: "Joint Learning Architectures",
+        paragraphs: [
+          "The study developed six architectures that jointly combined CNN, LSTM, and GRU components. CNN branches were used to learn local signal features, while recurrent LSTM and GRU components modeled temporal dependencies within the EEG recordings.",
+          "Testing multiple joint configurations made it possible to compare how different spatial and sequential learning strategies affected ADHD classification performance.",
+        ],
+      },
+      {
+        title: "Key Findings",
+        bullets: [
+          "The best-performing architecture combined a multi-head CNN with a multi-head LSTM.",
+          "The top joint learning model achieved 99.93% classification accuracy.",
+          "Careful EEG filtering and ICA-based artifact removal supported reliable feature learning.",
+          "The results demonstrate the potential of EEG-based deep learning as an objective aid for ADHD detection.",
+        ],
+      },
+      {
+        title: "Final Takeaway",
+        paragraphs: [
+          "This work shows that combining disciplined EEG preprocessing with joint spatial and temporal learning can produce highly accurate ADHD classification. The multi-head CNN and LSTM architecture highlights the value of learning complementary signal representations for computer-assisted neurodevelopmental assessment.",
+        ],
+      },
+    ],
+  },
+  {
     slug: "smart-phone-sensor-data-fusion-a-joint-learning-approach-to-activity-recognition",
     title:
       "Smart Phone Sensor Data Fusion: A Joint Learning Approach to Activity Recognition",

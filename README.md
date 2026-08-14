@@ -213,6 +213,9 @@ category: Full Stack Project
 summary: Short summary shown in project cards and metadata.
 liveUrl: https://example.com
 codeUrl: https://github.com/user/repo
+# Optional for published packages:
+packageName: example-package
+packageRegistry: npm
 order: 1
 tech:
   - Next.js
@@ -238,6 +241,8 @@ Project behavior:
 - The folder name becomes the slug, for example `content/projects/petcom/index.md` maps to `/projects/petcom`.
 - `getProjects()` sorts projects by most recent `published` date first, then by `order`.
 - `liveUrl` and `codeUrl` are optional. Buttons only render when the fields exist.
+- `packageName` and `packageRegistry` are optional. Use `PyPI` or `npm` for the registry value to enable package metrics on cards and detail pages.
+- Package versions, rolling 30-day downloads, and latest release dates are loaded through `lib/package-stats.ts` and refreshed daily, with verified fallback values for registry outages.
 - `tech` appears in cards and the project detail sidebar.
 - `features` is used for feature counts and project snapshot metadata.
 - The custom Markdown renderer supports `##` headings, `###` headings, paragraphs, and `-` unordered lists.

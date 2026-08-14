@@ -4,38 +4,22 @@ import Link from "next/link"
 import {
   ArrowUpRight,
   BookOpen,
-  Code2,
+  BriefcaseBusiness,
   Download,
   Film,
-  GraduationCap,
   Mail,
+  PackageCheck,
   PenLine,
+  ScrollText,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { formatDownloadCount, getPackageStats } from "@/lib/package-stats"
 import { profile } from "@/lib/profile"
-
-const profileSignals = [
-  {
-    label: "Full-stack developer",
-    value: "React, Next.js, TypeScript, APIs, and scalable product interfaces.",
-    icon: Code2,
-  },
-  {
-    label: "Software Engineer",
-    value: "Currently working as a Software Engineer at Mediatek",
-    icon: GraduationCap,
-  },
-  {
-    label: "Writing and reflection",
-    value:
-      "Sharing practical lessons whenever something feels worth passing on.",
-    icon: PenLine,
-  },
-] as const
+import { getResearchWorks } from "@/lib/research"
 
 const journey = [
-  "Hello! I’m Devraj Jhala, a full-stack developer with a strong interest in building products that are not just functional, but also clean, usable, and thoughtfully engineered. My core work has been around modern web development using technologies like React, Next.js, TypeScript, Tailwind CSS, Node.js, and databases such as PostgreSQL, MySQL, Firebase, and Supabase.",
+  "Hello! I’m Devrajsinh Jhala, a full-stack developer with a strong interest in building products that are not just functional, but also clean, usable, and thoughtfully engineered. My core work has been around modern web development using technologies like React, Next.js, TypeScript, Tailwind CSS, Node.js, and databases such as PostgreSQL, MySQL, Firebase, and Supabase.",
 
   "My journey into development started in a very simple way — by building a portfolio website in my second year of undergraduate studies while following YouTube tutorials. At that time, I was mostly copying code and trying to understand how everything worked. But that small project opened a door for me. What began as curiosity slowly turned into a serious interest in frontend engineering, product building, and eventually full-stack development.",
 
@@ -79,7 +63,44 @@ export const metadata: Metadata = {
     "A personal overview of Devrajsinh Jhala's software engineering journey, current work, and life beyond code.",
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const packageStats = await getPackageStats()
+  const totalDownloads = packageStats.reduce(
+    (total, item) => total + item.downloadsLastMonth,
+    0
+  )
+  const researchCount = getResearchWorks().length
+  const profileSignals = [
+    {
+      eyebrow: "Current role",
+      label: "Senior Software Engineer",
+      value: "MediaTek · Bengaluru, India",
+      proof: "Promoted from Software Engineer Intern in July 2026.",
+      href: "/#experience",
+      linkLabel: "View experience",
+      icon: BriefcaseBusiness,
+    },
+    {
+      eyebrow: "Open source",
+      label: `${packageStats.length} published packages`,
+      value: `${formatDownloadCount(totalDownloads)} downloads · last 30 days`,
+      proof: "Maintaining developer tools across the PyPI and npm ecosystems.",
+      href: "/projects",
+      linkLabel: "View packages",
+      icon: PackageCheck,
+    },
+    {
+      eyebrow: "Published research",
+      label: `${researchCount} publications`,
+      value: "Applied machine learning and deep learning",
+      proof:
+        "Research spanning EEG, sensor fusion, medical screening, and manufacturing.",
+      href: "/research",
+      linkLabel: "View research",
+      icon: ScrollText,
+    },
+  ] as const
+
   return (
     <div className="mx-auto w-full max-w-5xl">
       <section className="relative overflow-hidden py-6 sm:py-10 lg:py-12">
@@ -101,14 +122,14 @@ export default function AboutPage() {
           <div className="about-text-reveal flex max-w-xl min-w-0 flex-col items-center lg:items-start">
             <div className="space-y-3">
               <h1 className="text-3xl font-semibold tracking-normal text-balance text-foreground sm:text-4xl lg:text-[2.5rem]">
-                Devraj Jhala
+                {profile.name}
               </h1>
             </div>
 
             <p className="mt-4 max-w-lg text-sm leading-7 text-muted-foreground sm:text-base sm:leading-7">
-              Full-stack developer and Computer Science masters student building
-              fast, responsive, and scalable web applications with clean product
-              thinking.
+              Senior Software Engineer at MediaTek building dependable systems,
+              open-source developer tools, and applied machine-learning
+              research.
             </p>
 
             <div className="mt-7 flex w-full max-w-sm flex-col items-stretch gap-3 sm:max-w-none sm:flex-row lg:justify-start">
@@ -138,26 +159,63 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-6" aria-label="Profile highlights">
-        <dl className="grid gap-3 sm:grid-cols-3">
+      <section className="py-8" aria-labelledby="profile-signals-heading">
+        <div className="mb-6 grid gap-3 md:grid-cols-[minmax(0,0.7fr)_minmax(18rem,0.45fr)] md:items-end">
+          <div>
+            <p className="text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
+              Professional snapshot
+            </p>
+            <h2
+              id="profile-signals-heading"
+              className="mt-2 text-2xl font-semibold tracking-normal text-balance text-foreground sm:text-3xl"
+            >
+              Engineering that ships beyond a demo.
+            </h2>
+          </div>
+          <p className="max-w-md text-sm leading-6 text-muted-foreground md:justify-self-end">
+            Production experience, installable developer tools, and published
+            research—three ways I turn technical depth into practical work.
+          </p>
+        </div>
+
+        <dl className="grid gap-4 md:grid-cols-3">
           {profileSignals.map((item) => {
             const Icon = item.icon
 
             return (
               <div
                 key={item.label}
-                className="rounded-md border border-border/70 bg-card/70 p-4 shadow-sm shadow-foreground/5 transition-colors hover:border-foreground/20"
+                className="group flex min-h-64 flex-col rounded-lg border border-border/70 bg-card/75 p-5 shadow-sm shadow-foreground/5 transition-all duration-200 hover:-translate-y-0.5 hover:border-foreground/20 hover:shadow-md hover:shadow-foreground/10"
               >
-                <dt className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  <Icon
-                    aria-hidden="true"
-                    className="size-4 text-muted-foreground"
-                  />
+                <div className="flex items-center justify-between gap-3">
+                  <span className="inline-flex size-9 items-center justify-center rounded-md border border-border/70 bg-background/70 text-foreground shadow-sm shadow-foreground/5">
+                    <Icon aria-hidden="true" className="size-4" />
+                  </span>
+                  <span className="text-[0.68rem] font-semibold tracking-[0.13em] text-muted-foreground uppercase">
+                    {item.eyebrow}
+                  </span>
+                </div>
+
+                <dt className="mt-5 text-xl font-semibold tracking-normal text-balance text-foreground">
                   {item.label}
                 </dt>
-                <dd className="mt-2 text-sm leading-6 text-muted-foreground">
+                <dd className="mt-2 text-sm leading-6 font-medium text-foreground/80">
                   {item.value}
                 </dd>
+                <p className="mt-3 flex-1 text-sm leading-6 text-muted-foreground">
+                  {item.proof}
+                </p>
+
+                <Link
+                  href={item.href}
+                  className="mt-5 inline-flex w-fit items-center gap-1.5 border-b border-transparent text-sm font-medium text-foreground transition-colors hover:border-foreground/50 focus-visible:ring-3 focus-visible:ring-ring/40 focus-visible:outline-none"
+                >
+                  {item.linkLabel}
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </Link>
               </div>
             )
           })}
