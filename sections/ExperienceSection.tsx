@@ -17,8 +17,7 @@ const experiences: Experience[] = [
     location: "Bengaluru, Karnataka, India · On-site",
     current: true,
     highlights: [
-      "Contributing to system software across UEFI and USB subsystems for MediaTek platforms.",
-      "Promoted from Software Engineer Intern to Senior Software Engineer in July 2026.",
+      "Working on platform and systems software using C, C++, UEFI, USB, WDF/DMF, WinDbg, and TraceView.",
     ],
   },
   {
@@ -27,8 +26,10 @@ const experiences: Experience[] = [
     period: "January 2026 - July 2026",
     location: "Bengaluru, Karnataka, India · On-site",
     highlights: [
-      "Worked on software development in C and C++ with exposure to UEFI and USB platform components.",
-      "Built the platform context and engineering foundation that led to a full-time promotion.",
+      "Architected Custom DL Optimizer, a production-grade PyPI package that reduced inference latency by an average of 2.1x across diverse CNN architectures.",
+      "Authored high-performance OpenAI Triton kernels with block-level memory management and operator fusion for activation layers.",
+      "Measured 2.47x speedup on ResNet-50, 2.24x on VGG-16, and 2.06x on MobileNet-V2 and EfficientNet-B0 using an NVIDIA T4.",
+      "Developed and debugged kernel-level modules using WDF/DMF, WinDbg, and TraceView.",
     ],
   },
   {

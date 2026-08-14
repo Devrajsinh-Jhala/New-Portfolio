@@ -66,7 +66,8 @@ export default async function AboutPage() {
       eyebrow: "Current role",
       label: "Senior Software Engineer",
       value: "MediaTek · Bengaluru, India",
-      proof: "Promoted from Software Engineer Intern in July 2026.",
+      proof:
+        "Building systems software and performance tooling across C/C++, UEFI, USB, and PyTorch.",
       href: "/#experience",
       linkLabel: "View experience",
       icon: BriefcaseBusiness,
