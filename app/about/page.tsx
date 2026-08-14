@@ -102,10 +102,10 @@ export default async function AboutPage() {
           <div className="relative shrink-0">
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-400/35 via-emerald-400/20 to-amber-300/30 blur-xl" />
             <Image
-              src="/images/myPhoto.webp"
-              alt={`Profile portrait of ${profile.name}`}
-              width={240}
-              height={240}
+              src="/images/animePfp.jpeg"
+              alt={`Anime portrait representing ${profile.name}`}
+              width={254}
+              height={352}
               preload
               className="relative size-44 rounded-full border-4 border-background object-cover shadow-2xl ring-1 shadow-foreground/15 ring-border/80 sm:size-52 lg:size-60"
             />
