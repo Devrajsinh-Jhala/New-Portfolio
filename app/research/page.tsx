@@ -1,13 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import {
-  ArrowUpRight,
-  BarChart3,
-  Calendar,
-  FileText,
-  FlaskConical,
-  Tag,
-} from "lucide-react"
+import { ArrowUpRight, BarChart3, Calendar, Tag } from "lucide-react"
 
 import { getResearchWorks } from "@/lib/research"
 
@@ -26,31 +19,28 @@ export default function ResearchPage() {
       <section className="border-b border-border/70 py-10 sm:py-14">
         <div className="grid gap-6 md:grid-cols-[minmax(0,0.8fr)_minmax(18rem,0.45fr)] md:items-end">
           <div className="max-w-3xl space-y-5">
-            <p className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
-              <FlaskConical aria-hidden="true" className="size-3.5" />
-              Research
-            </p>
-            <h1 className="max-w-3xl text-3xl font-semibold tracking-normal text-balance text-foreground sm:text-5xl">
-              Research & publications
+            <p className="eyebrow">Research</p>
+            <h1 className="max-w-3xl text-3xl font-semibold tracking-[-0.03em] text-balance text-foreground sm:text-5xl">
+              Applied ML that met{" "}
+              <span className="font-display text-[1.05em] text-brand">
+                real data
+              </span>
             </h1>
           </div>
 
           <p className="max-w-sm text-sm leading-7 text-muted-foreground md:justify-self-end">
-            Exploring applied machine learning, intelligent systems, sensor
-            data, and software-led research workflows.
+            Four peer-reviewed papers across EEG diagnostics, smartphone sensor
+            fusion, medical screening, and manufacturing inspection.
           </p>
         </div>
       </section>
 
       <section className="py-7 sm:py-8" aria-labelledby="research-list-heading">
         <div className="mb-6 flex flex-col gap-2">
-          <p className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
-            <FileText aria-hidden="true" className="size-3.5" />
-            Publications
-          </p>
+          <p className="eyebrow">Publications</p>
           <h2
             id="research-list-heading"
-            className="text-xl font-semibold tracking-normal text-foreground"
+            className="mt-1 text-2xl font-semibold tracking-[-0.02em] text-foreground"
           >
             Selected work
           </h2>
@@ -95,10 +85,10 @@ export default function ResearchPage() {
                 <dl className="mt-5 grid gap-2 border-t border-border/70 pt-4 sm:grid-cols-3">
                   {work.metrics.map((metric) => (
                     <div key={metric.label}>
-                      <dt className="text-[0.68rem] font-medium tracking-[0.12em] text-muted-foreground uppercase">
+                      <dt className="font-mono text-[0.62rem] tracking-[0.12em] text-muted-foreground uppercase">
                         {metric.label}
                       </dt>
-                      <dd className="mt-1 text-sm font-semibold text-foreground">
+                      <dd className="stat-figure mt-1.5 text-lg text-foreground">
                         {metric.value}
                       </dd>
                     </div>

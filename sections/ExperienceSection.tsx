@@ -1,4 +1,6 @@
-import { Calendar, ChevronDown, MapPin } from "lucide-react"
+import { Plus } from "lucide-react"
+
+import { Reveal } from "@/components/reveal"
 
 type Experience = {
   company: string
@@ -7,6 +9,12 @@ type Experience = {
   location?: string
   highlights?: string[]
   current?: boolean
+}
+
+function splitPeriod(period: string) {
+  const [start, end] = period.split(" - ")
+
+  return { start, end: end ?? "" }
 }
 
 const experiences: Experience[] = [
@@ -84,95 +92,109 @@ function ExperienceSection() {
       className="mx-auto w-full max-w-5xl py-7"
       aria-labelledby="experience-heading"
     >
-      <div className="mb-6">
-        <p className="text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
-          Experience
-        </p>
+      <Reveal className="mb-7">
+        <p className="eyebrow">Experience</p>
         <h2
           id="experience-heading"
-          className="text-xl font-semibold tracking-normal text-foreground"
+          className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-foreground"
         >
-          Professional experience
+          From landing pages to{" "}
+          <span className="font-display text-[1.06em] text-brand">
+            platform software
+          </span>
         </h2>
-      </div>
+      </Reveal>
 
-      <ol className="relative border-s border-border/80">
-        {experiences.map((experience) => (
-          <li
-            key={`${experience.company}-${experience.role}`}
-            className="ms-6 pb-8 last:pb-0"
-          >
-            <span
-              aria-hidden="true"
-              className="absolute -start-[0.4375rem] mt-1.5 size-3.5 rounded-full border-2 border-background bg-foreground shadow-sm shadow-foreground/15"
-            />
+      <ol className="border-t border-border">
+        {experiences.map((experience, index) => {
+          const { start, end } = splitPeriod(experience.period)
 
-            <article className="rounded-md border border-border/70 bg-card/75 shadow-sm shadow-foreground/5">
-              {experience.highlights?.length ? (
-                <details className="group/details">
-                  <summary className="grid cursor-pointer list-none grid-cols-[minmax(0,1fr)_auto] items-start gap-3 p-4 transition-colors duration-200 hover:bg-muted/45 focus-visible:ring-3 focus-visible:ring-ring/35 focus-visible:outline-none [&::-webkit-details-marker]:hidden">
-                    <ExperienceHeader experience={experience} />
-                    <ChevronDown
-                      aria-hidden="true"
-                      className="mt-1 size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-open/details:rotate-180"
+          return (
+            <Reveal
+              as="li"
+              key={`${experience.company}-${experience.role}`}
+              delay={index * 45}
+              className="border-b border-border"
+            >
+              <details className="group/exp">
+                <summary className="grid cursor-pointer list-none grid-cols-[minmax(0,1fr)_auto] items-start gap-x-4 rounded-md py-5 focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none sm:grid-cols-[8.5rem_minmax(0,1fr)_auto] sm:gap-x-8 [&::-webkit-details-marker]:hidden">
+                  <div
+                    aria-hidden="true"
+                    className="relative hidden pt-1 sm:block"
+                  >
+                    <span
+                      className={
+                        experience.current
+                          ? "absolute top-[0.4rem] left-0 size-2 rounded-full bg-brand ring-4 ring-brand/15"
+                          : "absolute top-[0.4rem] left-0 size-2 rounded-full bg-muted-foreground/40"
+                      }
                     />
-                  </summary>
+                    <span className="block pl-5 font-mono text-xs leading-5 text-muted-foreground tabular-nums">
+                      {start}
+                      <br />
+                      <span
+                        className={
+                          experience.current
+                            ? "text-brand"
+                            : "text-muted-foreground/60"
+                        }
+                      >
+                        {end}
+                      </span>
+                    </span>
+                  </div>
 
-                  <ul className="space-y-2 px-4 pb-4 text-sm leading-6 text-muted-foreground">
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                      <h3 className="text-lg font-semibold tracking-[-0.01em] text-foreground transition-colors group-hover/exp:text-brand">
+                        {experience.role}
+                      </h3>
+                      {experience.current ? (
+                        <span className="inline-flex rounded-full border border-brand/25 bg-brand/10 px-2 py-0.5 font-mono text-[0.58rem] tracking-[0.12em] text-brand uppercase">
+                          Current
+                        </span>
+                      ) : null}
+                    </div>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {experience.company}
+                      <span className="text-muted-foreground/60 sm:hidden">
+                        {" "}
+                        · {experience.period}
+                      </span>
+                      {experience.location ? (
+                        <span className="hidden text-muted-foreground/50 sm:inline">
+                          {" "}
+                          · {experience.location}
+                        </span>
+                      ) : null}
+                    </p>
+                  </div>
+
+                  <Plus
+                    aria-hidden="true"
+                    className="mt-1 size-4 shrink-0 text-muted-foreground transition-transform duration-300 group-open/exp:rotate-45"
+                  />
+                </summary>
+
+                {experience.highlights?.length ? (
+                  <ul className="grid gap-2.5 pb-6 text-sm leading-6 text-muted-foreground sm:pl-[10.5rem]">
                     {experience.highlights.map((highlight) => (
-                      <li key={highlight} className="flex gap-2">
+                      <li key={highlight} className="flex gap-2.5">
                         <span
                           aria-hidden="true"
-                          className="mt-2 size-1.5 shrink-0 rounded-full bg-foreground/50"
+                          className="mt-[0.7rem] h-px w-3 shrink-0 bg-brand/60"
                         />
                         <span>{highlight}</span>
                       </li>
                     ))}
                   </ul>
-                </details>
-              ) : (
-                <div className="p-4">
-                  <ExperienceHeader experience={experience} />
-                </div>
-              )}
-            </article>
-          </li>
-        ))}
+                ) : null}
+              </details>
+            </Reveal>
+          )
+        })}
       </ol>
     </section>
-  )
-}
-
-function ExperienceHeader({ experience }: { experience: Experience }) {
-  return (
-    <div className="grid min-w-0 gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start sm:gap-4">
-      <div className="min-w-0">
-        <h3 className="text-base font-semibold tracking-normal text-foreground">
-          {experience.role}
-          {experience.current ? (
-            <span className="ms-2 inline-flex rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2 py-0.5 align-middle text-[0.65rem] font-semibold tracking-[0.08em] text-emerald-700 uppercase dark:text-emerald-300">
-              Current
-            </span>
-          ) : null}
-        </h3>
-        <p className="mt-1 text-sm font-medium text-muted-foreground">
-          {experience.company}
-        </p>
-      </div>
-
-      <div className="flex shrink-0 flex-col gap-1 text-xs text-muted-foreground sm:items-end">
-        <span className="inline-flex items-center gap-1.5">
-          <Calendar aria-hidden="true" className="size-3.5" />
-          {experience.period}
-        </span>
-        {experience.location ? (
-          <span className="inline-flex items-center gap-1.5">
-            <MapPin aria-hidden="true" className="size-3.5" />
-            {experience.location}
-          </span>
-        ) : null}
-      </div>
-    </div>
   )
 }
 

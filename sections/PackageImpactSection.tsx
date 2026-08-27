@@ -1,6 +1,7 @@
 import Link from "next/link"
-import { ArrowUpRight, Download, PackageCheck, RefreshCw } from "lucide-react"
+import { ArrowUpRight, Download, RefreshCw } from "lucide-react"
 
+import { Reveal } from "@/components/reveal"
 import { Button } from "@/components/ui/button"
 import {
   formatDownloadCount,
@@ -38,25 +39,27 @@ async function PackageImpactSection() {
 
   return (
     <section
-      className="mx-auto w-full max-w-5xl py-7"
+      className="mx-auto w-full max-w-5xl py-10"
       aria-labelledby="package-impact-heading"
     >
-      <div className="overflow-hidden rounded-lg border border-border/70 bg-card/75 shadow-sm shadow-foreground/5 backdrop-blur">
-        <div className="flex flex-col gap-5 p-5 sm:p-6 md:flex-row md:items-end md:justify-between">
+      <Reveal className="overflow-hidden rounded-xl border border-border bg-card/60">
+        <div className="flex flex-col gap-5 p-5 sm:p-7 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <p className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
-              <PackageCheck aria-hidden="true" className="size-3.5" />
-              Open source, shipped
-            </p>
+            <p className="eyebrow">Open source, shipped</p>
             <h2
               id="package-impact-heading"
-              className="mt-3 text-2xl font-semibold tracking-normal text-balance text-foreground sm:text-3xl"
+              className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-balance text-foreground sm:text-[2rem] sm:leading-tight"
             >
-              Developer tools with measurable adoption
+              Developer tools with adoption I can{" "}
+              <span className="font-display text-[1.06em] text-brand">
+                measure
+              </span>
             </h2>
             <p className="mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
-              Published across Python and JavaScript ecosystems, spanning ML
-              inference, research submission workflows, and package security.
+              Three packages across PyPI and npm — a PyTorch inference plan
+              selector, a research-submission preflight, and a pre-execution npm
+              security checkpoint. Every download below is pulled live from the
+              public registries.
             </p>
           </div>
 
@@ -68,30 +71,30 @@ async function PackageImpactSection() {
           </Button>
         </div>
 
-        <dl className="grid border-y border-border/70 bg-background/45 sm:grid-cols-3">
-          <div className="p-4 sm:p-5">
-            <dt className="text-[0.68rem] font-medium tracking-[0.13em] text-muted-foreground uppercase">
+        <dl className="grid border-y border-border sm:grid-cols-3">
+          <div className="p-5 sm:p-6">
+            <dt className="font-mono text-[0.66rem] tracking-[0.14em] text-muted-foreground uppercase">
               Downloads · 30 days
             </dt>
-            <dd className="mt-1.5 text-2xl font-semibold tracking-tight text-foreground">
+            <dd className="stat-figure mt-2 text-4xl text-foreground">
               {formatDownloadCount(totalDownloads)}
             </dd>
           </div>
-          <div className="border-t border-border/70 p-4 sm:border-t-0 sm:border-l sm:p-5">
-            <dt className="text-[0.68rem] font-medium tracking-[0.13em] text-muted-foreground uppercase">
+          <div className="border-t border-border p-5 sm:border-t-0 sm:border-l sm:p-6">
+            <dt className="font-mono text-[0.66rem] tracking-[0.14em] text-muted-foreground uppercase">
               Published packages
             </dt>
-            <dd className="mt-1.5 text-2xl font-semibold tracking-tight text-foreground">
+            <dd className="stat-figure mt-2 text-4xl text-foreground">
               {packageStats.length}
             </dd>
           </div>
-          <div className="border-t border-border/70 p-4 sm:border-t-0 sm:border-l sm:p-5">
-            <dt className="text-[0.68rem] font-medium tracking-[0.13em] text-muted-foreground uppercase">
-              Package ecosystems
+          <div className="border-t border-border p-5 sm:border-t-0 sm:border-l sm:p-6">
+            <dt className="font-mono text-[0.66rem] tracking-[0.14em] text-muted-foreground uppercase">
+              Ecosystems
             </dt>
-            <dd className="mt-1.5 text-2xl font-semibold tracking-tight text-foreground">
+            <dd className="stat-figure mt-2 flex items-baseline gap-2 text-4xl text-foreground">
               {registryCount}
-              <span className="ml-2 text-sm font-medium text-muted-foreground">
+              <span className="font-sans text-sm font-medium tracking-normal text-muted-foreground">
                 PyPI + npm
               </span>
             </dd>
@@ -107,41 +110,39 @@ async function PackageImpactSection() {
                 key={project.slug}
                 href={`/projects/${project.slug}`}
                 className={cn(
-                  "group relative flex min-h-60 flex-col p-5 transition-colors hover:bg-muted/40 focus-visible:z-10 focus-visible:ring-3 focus-visible:ring-ring/40 focus-visible:outline-none sm:p-6",
-                  index > 0 &&
-                    "border-t border-border/70 lg:border-t-0 lg:border-l",
-                  isFeatured && "bg-muted/25"
+                  "group relative flex min-h-60 flex-col p-5 transition-colors hover:bg-brand/[0.04] focus-visible:z-10 focus-visible:ring-3 focus-visible:ring-ring/40 focus-visible:outline-none sm:p-6",
+                  index > 0 && "border-t border-border lg:border-t-0 lg:border-l"
                 )}
               >
                 <div className="flex items-center justify-between gap-3">
-                  <span className="rounded-md border border-border/70 bg-background/70 px-2 py-1 text-xs font-medium text-muted-foreground">
+                  <span className="rounded-md border border-border bg-background/70 px-2 py-1 font-mono text-[0.7rem] text-muted-foreground">
                     {stats.registry} · v{stats.version}
                   </span>
                   {isFeatured ? (
-                    <span className="text-[0.68rem] font-semibold tracking-[0.13em] text-foreground uppercase">
+                    <span className="font-mono text-[0.62rem] tracking-[0.16em] text-brand uppercase">
                       Featured
                     </span>
                   ) : null}
                 </div>
 
-                <h3 className="mt-5 text-xl font-semibold tracking-normal text-foreground">
+                <h3 className="mt-5 text-xl font-semibold tracking-[-0.01em] text-foreground">
                   {project.title}
                 </h3>
                 <p className="mt-3 line-clamp-3 flex-1 text-sm leading-6 text-muted-foreground">
                   {project.summary}
                 </p>
 
-                <div className="mt-5 flex items-end justify-between gap-4 border-t border-border/70 pt-4">
+                <div className="mt-5 flex items-end justify-between gap-4 border-t border-border pt-4">
                   <div>
-                    <p className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <p className="inline-flex items-center gap-1.5 font-mono text-[0.66rem] tracking-[0.1em] text-muted-foreground uppercase">
                       <Download aria-hidden="true" className="size-3.5" />
-                      Last 30 days
+                      30-day installs
                     </p>
-                    <p className="mt-1 text-lg font-semibold text-foreground">
+                    <p className="stat-figure mt-1.5 text-2xl text-foreground">
                       {stats.downloadsLastMonth.toLocaleString()}
                     </p>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
+                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground transition-colors group-hover:text-brand">
                     View project
                     <ArrowUpRight
                       aria-hidden="true"
@@ -154,12 +155,12 @@ async function PackageImpactSection() {
           })}
         </div>
 
-        <p className="flex items-center gap-2 border-t border-border/70 px-5 py-3 text-xs text-muted-foreground sm:px-6">
+        <p className="flex items-center gap-2 border-t border-border px-5 py-3 text-xs text-muted-foreground sm:px-6">
           <RefreshCw aria-hidden="true" className="size-3.5" />
           Download counts refresh daily from public package data; registry
           downloads are not unique-user counts.
         </p>
-      </div>
+      </Reveal>
     </section>
   )
 }

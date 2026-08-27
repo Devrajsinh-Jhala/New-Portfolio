@@ -1,15 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import {
-  ArrowUpRight,
-  Calendar,
-  Code2,
-  Download,
-  FolderKanban,
-  Layers3,
-  PackageCheck,
-  Tag,
-} from "lucide-react"
+import { ArrowUpRight, Calendar, Download, Layers3, Tag } from "lucide-react"
 
 import {
   formatDownloadCount,
@@ -41,9 +32,7 @@ function ProjectCard({
       className="group block h-full focus-visible:outline-none"
     >
       <article className="flex h-full flex-col overflow-hidden rounded-lg border border-border/70 bg-card shadow-sm shadow-foreground/5 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-foreground/20 group-hover:shadow-md group-hover:shadow-foreground/10 group-focus-visible:ring-3 group-focus-visible:ring-ring/35">
-        {featured ? (
-          <div className="h-1 bg-gradient-to-r from-sky-500/80 via-emerald-400/70 to-amber-400/70" />
-        ) : null}
+        {featured ? <div className="h-0.5 bg-brand/70" /> : null}
         <div className="flex flex-1 flex-col p-4 sm:p-5">
           <div className="mb-4 flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-md border border-border/70 bg-muted/60 px-2 py-1 text-xs font-medium text-muted-foreground">
@@ -149,19 +138,20 @@ export default async function ProjectsPage() {
       <section className="border-b border-border/70 py-10 sm:py-14">
         <div className="grid gap-6 md:grid-cols-[minmax(0,0.8fr)_minmax(18rem,0.45fr)] md:items-end">
           <div className="max-w-3xl space-y-5">
-            <p className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
-              <FolderKanban aria-hidden="true" className="size-3.5" />
-              Projects
-            </p>
-            <h1 className="max-w-3xl text-3xl font-semibold tracking-normal text-balance text-foreground sm:text-5xl">
-              Software with evidence behind it
+            <p className="eyebrow">Projects</p>
+            <h1 className="max-w-3xl text-3xl font-semibold tracking-[-0.03em] text-balance text-foreground sm:text-5xl">
+              Software with{" "}
+              <span className="font-display text-[1.05em] text-brand">
+                evidence
+              </span>{" "}
+              behind it
             </h1>
           </div>
 
           <p className="max-w-sm text-sm leading-7 text-muted-foreground md:justify-self-end">
-            Maintained open-source tools and selected product builds, presented
-            through their constraints, engineering decisions, and observable
-            outcomes.
+            Maintained open-source tools and selected product builds — each one
+            written up through its constraints, the engineering decisions, and
+            what actually shipped.
           </p>
         </div>
       </section>
@@ -169,18 +159,15 @@ export default async function ProjectsPage() {
       <section className="py-8" aria-labelledby="featured-projects-heading">
         <div className="mb-6 grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
           <div>
-            <p className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
-              <PackageCheck aria-hidden="true" className="size-3.5" />
-              Published tools
-            </p>
+            <p className="eyebrow">Published tools</p>
             <h2
               id="featured-projects-heading"
-              className="mt-2 text-2xl font-semibold tracking-normal text-foreground"
+              className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-foreground"
             >
               Featured open-source work
             </h2>
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="font-mono text-[0.7rem] text-muted-foreground">
             Registry metrics refresh every 24 hours.
           </p>
         </div>
@@ -202,13 +189,10 @@ export default async function ProjectsPage() {
         aria-labelledby="project-archive-heading"
       >
         <div className="mb-6">
-          <p className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
-            <Code2 aria-hidden="true" className="size-3.5" />
-            Product archive
-          </p>
+          <p className="eyebrow">Product archive</p>
           <h2
             id="project-archive-heading"
-            className="mt-2 text-2xl font-semibold tracking-normal text-foreground"
+            className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-foreground"
           >
             Selected full-stack builds
           </h2>

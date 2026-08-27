@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Geist_Mono, Inter } from "next/font/google"
+import { Geist_Mono, Hanken_Grotesk, Newsreader } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 
 import "./globals.css"
@@ -10,7 +10,17 @@ import { profile, socialLinks } from "@/lib/profile"
 import { siteTitleName, siteUrl } from "@/lib/site-metadata"
 import { cn } from "@/lib/utils"
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
+const fontSans = Hanken_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
+
+const fontDisplay = Newsreader({
+  subsets: ["latin"],
+  style: ["italic", "normal"],
+  weight: ["400", "500"],
+  variable: "--font-display",
+})
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
@@ -102,8 +112,9 @@ export default function RootLayout({
       className={cn(
         "antialiased",
         fontMono.variable,
+        fontDisplay.variable,
         "font-sans",
-        inter.variable
+        fontSans.variable
       )}
     >
       <body>

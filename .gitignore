@@ -22,6 +22,8 @@
 .DS_Store
 *.pem
 .data/
+.claude/
+.next-dev*.log
 
 # debug
 npm-debug.log*

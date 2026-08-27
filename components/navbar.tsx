@@ -29,7 +29,7 @@ function Navbar({ className }: { className?: string }) {
           aria-label="Devrajsinh Jhala, home"
           className="inline-flex items-center gap-2 rounded-md text-sm font-semibold tracking-tight text-foreground focus-visible:ring-3 focus-visible:ring-ring/35 focus-visible:outline-none"
         >
-          <span className="inline-flex size-8 items-center justify-center rounded-md border border-border/70 bg-card shadow-sm shadow-foreground/5">
+          <span className="inline-flex size-8 items-center justify-center rounded-md border border-brand/25 bg-brand/10 font-mono text-xs text-brand">
             DJ
           </span>
           <span className="hidden sm:inline">Devrajsinh Jhala</span>
@@ -53,7 +53,7 @@ function Navbar({ className }: { className?: string }) {
                 className={cn(
                   "relative shrink-0 rounded-md px-2 py-2 text-xs font-medium transition-colors duration-200 focus-visible:ring-3 focus-visible:ring-ring/35 focus-visible:outline-none sm:px-2.5 sm:text-sm",
                   isActive
-                    ? "bg-muted text-foreground"
+                    ? "text-foreground"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
@@ -61,7 +61,7 @@ function Navbar({ className }: { className?: string }) {
                 {isActive ? (
                   <span
                     aria-hidden="true"
-                    className="absolute inset-x-2 -bottom-[0.56rem] h-0.5 rounded-full bg-foreground"
+                    className="absolute inset-x-2 -bottom-[0.56rem] h-0.5 rounded-full bg-brand"
                   />
                 ) : null}
               </Link>

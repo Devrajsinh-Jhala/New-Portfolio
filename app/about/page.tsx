@@ -96,18 +96,24 @@ export default async function AboutPage() {
   return (
     <div className="mx-auto w-full max-w-5xl">
       <section className="relative overflow-hidden py-6 sm:py-10 lg:py-12">
-        <div className="absolute inset-x-0 top-16 -z-10 h-44 rounded-full bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.14),transparent_68%)] blur-2xl dark:bg-[radial-gradient(circle_at_center,rgba(125,211,252,0.12),transparent_68%)]" />
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-16 -z-10 h-44 rounded-full bg-brand/10 blur-3xl"
+        />
 
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-7 text-center lg:flex-row lg:justify-center lg:gap-10 lg:text-left">
           <div className="relative shrink-0">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-400/35 via-emerald-400/20 to-amber-300/30 blur-xl" />
+            <div
+              aria-hidden="true"
+              className="absolute -inset-2 rounded-full bg-brand/10 blur-xl"
+            />
             <Image
               src="/images/animePfp.jpeg"
               alt={`Anime portrait representing ${profile.name}`}
               width={254}
               height={352}
               preload
-              className="relative size-44 rounded-full border-4 border-background object-cover shadow-2xl ring-1 shadow-foreground/15 ring-border/80 sm:size-52 lg:size-60"
+              className="relative size-44 rounded-full border border-border object-cover shadow-xl ring-1 shadow-foreground/10 ring-foreground/5 sm:size-52 lg:size-60"
             />
           </div>
 
@@ -151,19 +157,21 @@ export default async function AboutPage() {
       <section className="py-8" aria-labelledby="profile-signals-heading">
         <div className="mb-6 grid gap-3 md:grid-cols-[minmax(0,0.7fr)_minmax(18rem,0.45fr)] md:items-end">
           <div>
-            <p className="text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
-              Professional snapshot
-            </p>
+            <p className="eyebrow">Professional snapshot</p>
             <h2
               id="profile-signals-heading"
-              className="mt-2 text-2xl font-semibold tracking-normal text-balance text-foreground sm:text-3xl"
+              className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-balance text-foreground sm:text-3xl"
             >
-              Engineering that ships beyond a demo.
+              Three tracks, one{" "}
+              <span className="font-display text-[1.06em] text-brand">
+                standard
+              </span>
             </h2>
           </div>
           <p className="max-w-md text-sm leading-6 text-muted-foreground md:justify-self-end">
-            Production experience, installable developer tools, and published
-            research—three ways I turn technical depth into practical work.
+            A production role, installable developer tools, and peer-reviewed
+            research — held to the same bar: understand the constraints, make the
+            tradeoffs visible, ship something people can evaluate.
           </p>
         </div>
 
@@ -216,14 +224,15 @@ export default async function AboutPage() {
         aria-labelledby="story-heading"
       >
         <div>
-          <p className="text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
-            My story
-          </p>
+          <p className="eyebrow">My story</p>
           <h2
             id="story-heading"
-            className="mt-2 text-2xl font-semibold tracking-normal text-foreground sm:text-3xl lg:sticky lg:top-24"
+            className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-foreground sm:text-3xl lg:sticky lg:top-24"
           >
-            Systems, tools, and research with practical outcomes.
+            How I got from{" "}
+            <span className="font-display text-[1.06em] text-brand">
+              here to here
+            </span>
           </h2>
         </div>
 
@@ -239,12 +248,10 @@ export default async function AboutPage() {
       <section className="py-8" aria-labelledby="beyond-code-heading">
         <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
-              Beyond code
-            </p>
+            <p className="eyebrow">Beyond code</p>
             <h2
               id="beyond-code-heading"
-              className="text-2xl font-semibold tracking-normal text-foreground"
+              className="mt-1 text-2xl font-semibold tracking-[-0.02em] text-foreground"
             >
               Things that keep me curious
             </h2>

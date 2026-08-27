@@ -1,4 +1,6 @@
 import type { IconType } from "react-icons"
+
+import { Reveal } from "@/components/reveal"
 import {
   SiC,
   SiCplusplus,
@@ -71,44 +73,47 @@ function SkillsSection() {
       className="mx-auto w-full max-w-5xl py-8"
       aria-labelledby="skills-heading"
     >
-      <div className="mb-6 grid gap-3 md:grid-cols-[minmax(0,0.7fr)_minmax(18rem,0.45fr)] md:items-end">
+      <Reveal className="mb-7 grid gap-3 md:grid-cols-[minmax(0,0.7fr)_minmax(18rem,0.45fr)] md:items-end">
         <div>
-          <p className="text-xs font-medium tracking-[0.16em] text-muted-foreground uppercase">
-            Core toolkit
-          </p>
+          <p className="eyebrow">Core toolkit</p>
           <h2
             id="skills-heading"
-            className="mt-2 text-2xl font-semibold tracking-normal text-foreground"
+            className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-foreground"
           >
-            Technologies I use in production
+            What I reach for in{" "}
+            <span className="font-display text-[1.06em] text-brand">
+              production
+            </span>
           </h2>
         </div>
         <p className="max-w-md text-sm leading-6 text-muted-foreground md:justify-self-end">
-          A focused stack shaped by systems work, product delivery, open-source
-          maintenance, and applied machine-learning research.
+          A deliberately narrow stack: low-level systems in C and C++, typed
+          product work in the React ecosystem, and PyTorch for research tooling.
         </p>
-      </div>
+      </Reveal>
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {skillGroups.map((group) => (
-          <article
+        {skillGroups.map((group, index) => (
+          <Reveal
+            as="article"
             key={group.title}
-            className="rounded-lg border border-border/70 bg-card/75 p-4 shadow-sm shadow-foreground/5"
+            delay={index * 70}
+            className="rounded-xl border border-border bg-card/60 p-4 transition-colors hover:border-brand/30"
           >
-            <h3 className="text-sm font-semibold text-foreground">
+            <h3 className="font-mono text-xs tracking-[0.08em] text-foreground uppercase">
               {group.title}
             </h3>
-            <p className="mt-1 min-h-10 text-xs leading-5 text-muted-foreground">
+            <p className="mt-2 min-h-10 text-xs leading-5 text-muted-foreground">
               {group.description}
             </p>
-            <ul className="mt-4 space-y-2">
+            <ul className="mt-4 space-y-1.5">
               {group.skills.map((skill) => {
                 const Icon = skill.icon
 
                 return (
                   <li
                     key={skill.name}
-                    className="flex items-center gap-2.5 rounded-md bg-muted/55 px-3 py-2 text-sm font-medium text-foreground"
+                    className="flex items-center gap-2.5 rounded-md bg-muted/50 px-3 py-2 text-sm font-medium text-foreground"
                   >
                     <Icon
                       aria-hidden="true"
@@ -120,7 +125,7 @@ function SkillsSection() {
                 )
               })}
             </ul>
-          </article>
+          </Reveal>
         ))}
       </div>
     </section>
