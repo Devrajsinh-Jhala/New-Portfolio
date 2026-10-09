@@ -59,8 +59,9 @@ const tricks: { frames: FrameName[]; says: string; hop?: boolean }[] = [
 
 /**
  * Cuts the dog out of its sheet: clears the pale backdrop by flooding in from
- * the edges of each cell (so pale pixels inside the dog are kept), then trims
- * the fringe left where the dog met the backdrop.
+ * the edges of each cell (so pale pixels inside the dog are kept), trims the
+ * fringe left where the dog met the backdrop, and removes stray pieces of the
+ * neighbouring drawings.
  */
 function cutOut(image: HTMLImageElement) {
   const width = image.naturalWidth
@@ -162,6 +163,81 @@ function cutOut(image: HTMLImageElement) {
 
     for (const i of fringe) {
       data[i + 3] = 0
+    }
+  }
+
+  // A few drawings reach past their own cell, which leaves a paw or an ear tip
+  // in the cell next door. Keep each cell's main shape and anything floating
+  // near it (motion lines); drop pieces that hang off the cell's edge, and dust.
+  for (let cellY = 0; cellY < 3; cellY++) {
+    for (let cellX = 0; cellX < 3; cellX++) {
+      const x0 = cellX * cellWidth
+      const y0 = cellY * cellHeight
+      const alphaAt = (index: number) => {
+        const x = index % cellWidth
+        const y = (index - x) / cellWidth
+
+        return ((y0 + y) * width + x0 + x) * 4 + 3
+      }
+      const seen = new Uint8Array(cellWidth * cellHeight)
+      const pieces: { pixels: number[]; onEdge: boolean }[] = []
+
+      for (let start = 0; start < seen.length; start++) {
+        if (seen[start] || !data[alphaAt(start)]) {
+          continue
+        }
+
+        const piece = { pixels: [] as number[], onEdge: false }
+        const stack = [start]
+
+        seen[start] = 1
+
+        while (stack.length) {
+          const index = stack.pop() as number
+          const x = index % cellWidth
+          const y = (index - x) / cellWidth
+
+          piece.pixels.push(index)
+
+          if (x < 2 || y < 2 || x >= cellWidth - 2 || y >= cellHeight - 2) {
+            piece.onEdge = true
+          }
+
+          for (const [nx, ny] of [
+            [x + 1, y],
+            [x - 1, y],
+            [x, y + 1],
+            [x, y - 1],
+          ]) {
+            if (nx < 0 || ny < 0 || nx >= cellWidth || ny >= cellHeight) {
+              continue
+            }
+
+            const next = ny * cellWidth + nx
+
+            if (!seen[next] && data[alphaAt(next)]) {
+              seen[next] = 1
+              stack.push(next)
+            }
+          }
+        }
+
+        pieces.push(piece)
+      }
+
+      const main = pieces.reduce(
+        (largest, piece) =>
+          piece.pixels.length > largest.pixels.length ? piece : largest,
+        pieces[0]
+      )
+
+      for (const piece of pieces) {
+        if (piece !== main && (piece.onEdge || piece.pixels.length < 12)) {
+          for (const index of piece.pixels) {
+            data[alphaAt(index)] = 0
+          }
+        }
+      }
     }
   }
 
