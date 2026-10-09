@@ -8,6 +8,8 @@ codeUrl: https://github.com/Devrajsinh-Jhala/ResearchPlot
 packageName: researchplot-venues
 packageRegistry: PyPI
 installCommand: pip install researchplot-venues
+tagline: Audits research figures against venue rules.
+blurb: A Matplotlib tool that validates and audits publication figures against venue rules for IEEE, Nature, NeurIPS and others.
 order: 1
 tech:
   - Python

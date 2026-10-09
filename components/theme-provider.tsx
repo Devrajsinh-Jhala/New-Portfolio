@@ -1,7 +1,10 @@
 "use client"
 
 import * as React from "react"
+import { flushSync } from "react-dom"
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes"
+
+import { reveal } from "@/lib/reveal"
 
 function ThemeProvider({
   children,
@@ -9,7 +12,7 @@ function ThemeProvider({
 }: React.ComponentProps<typeof NextThemesProvider>) {
   return (
     <NextThemesProvider
-      attribute="class"
+      attribute="data-theme"
       defaultTheme="system"
       enableSystem
       disableTransitionOnChange
@@ -18,6 +21,22 @@ function ThemeProvider({
       <ThemeHotkey />
       {children}
     </NextThemesProvider>
+  )
+}
+
+/** Flips between light and dark, opening the new theme from `origin`. */
+function useThemeSwitch() {
+  const { resolvedTheme, setTheme } = useTheme()
+
+  return React.useCallback(
+    (origin: Element | null) => {
+      const next = resolvedTheme === "dark" ? "light" : "dark"
+
+      reveal(origin, () => {
+        flushSync(() => setTheme(next))
+      })
+    },
+    [resolvedTheme, setTheme]
   )
 }
 
@@ -35,7 +54,7 @@ function isTypingTarget(target: EventTarget | null) {
 }
 
 function ThemeHotkey() {
-  const { resolvedTheme, setTheme } = useTheme()
+  const switchTheme = useThemeSwitch()
 
   React.useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -55,7 +74,7 @@ function ThemeHotkey() {
         return
       }
 
-      setTheme(resolvedTheme === "dark" ? "light" : "dark")
+      switchTheme(document.querySelector("[data-theme-toggle]"))
     }
 
     window.addEventListener("keydown", onKeyDown)
@@ -63,9 +82,9 @@ function ThemeHotkey() {
     return () => {
       window.removeEventListener("keydown", onKeyDown)
     }
-  }, [resolvedTheme, setTheme])
+  }, [switchTheme])
 
   return null
 }
 
-export { ThemeProvider }
+export { ThemeProvider, useThemeSwitch }

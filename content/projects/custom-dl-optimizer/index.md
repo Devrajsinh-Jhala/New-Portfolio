@@ -8,6 +8,8 @@ codeUrl: https://github.com/Devrajsinh-Jhala/Custom-DL-Optimizer
 packageName: custom-dl-optimizer
 packageRegistry: PyPI
 installCommand: pip install custom-dl-optimizer
+tagline: Picks a faster PyTorch inference plan, with proof.
+blurb: A PyTorch inference framework that treats execution paths (TorchInductor, Torch-TensorRT, ONNX Runtime, TorchAO quantization) as competing plans, and only replaces the baseline when the measured speedup survives a statistical bound.
 order: 2
 tech:
   - Python

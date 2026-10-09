@@ -1,388 +1,168 @@
 # Devrajsinh Jhala Portfolio
 
-A personal portfolio for Devrajsinh Jhala, built with Next.js, React, TypeScript, Tailwind CSS, and shadcn/ui. The site presents maintained open-source tools, selected product work, research publications, professional experience, focused skills, live package metrics, and a GitHub contribution graph.
+The source for [devraj.pro](https://www.devraj.pro): a multi-page personal site built with Next.js, React and TypeScript, styled with one hand-written stylesheet.
 
-This repository uses the Next.js App Router and the installed Next.js version is newer than many older examples online. Before changing Next-specific code, read the relevant local docs in `node_modules/next/dist/docs/` and follow the note in `AGENTS.md`.
+This repository uses the Next.js App Router, and the installed Next.js version is newer than many examples online. Before changing Next-specific code, read the relevant local docs in `node_modules/next/dist/docs/` and follow the note in `AGENTS.md`.
 
-## Table of Contents
+## What is on the site
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Routes](#routes)
-- [Getting Started](#getting-started)
-- [Environment Variables](#environment-variables)
-- [Available Scripts](#available-scripts)
-- [Project Structure](#project-structure)
-- [Content Management](#content-management)
-- [UI and Styling](#ui-and-styling)
-- [Data Flow](#data-flow)
-- [Deployment](#deployment)
-- [Quality Checks](#quality-checks)
-- [Troubleshooting](#troubleshooting)
+- **Home** has two sides behind one switch. The professional side shows experience as levels (a pinned stage that changes as you scroll), skills as icons that float and then line up into groups, open-source packages, research, and education. The personal side shows the latest writing, a bookshelf, anime, and a note box.
+- **Projects** lists the open-source packages with live download counts, and the earlier full-stack builds. Every project has its own write-up page.
+- **Research** lists the published papers. Every paper has its own page.
+- **Blog** and **Books** are written as Markdown files in this repository.
+- **About** is the longer personal story.
+- A character portrait looks towards the pointer and reacts to the page, and Bruno the Doberman follows the pointer and does a trick when clicked.
+- Light and dark themes (press `d`), page-to-page transitions, an RSS feed, a sitemap, and search metadata.
 
-## Features
+## Tech stack
 
-- Home page with professional positioning, a direct résumé and contact path, live package impact, GitHub activity, focused skills, and a work timeline.
-- About page with a personal story, profile highlights, CV download, contact action, and interests beyond code.
-- Project archive generated from Markdown files in `content/projects`.
-- Individual project pages with metadata, live/code links, tech stack, feature count, table of contents, and rendered project writeups.
-- Research archive generated from typed research data in `lib/research.ts`.
-- Individual research pages with paper links, metrics, keywords, and structured sections.
-- Sticky responsive navigation with a personal wordmark and active-route state.
-- System-aware dark/light theme powered by `next-themes`, with a theme toggle and `d` keyboard shortcut.
-- GitHub contribution graph powered by the GitHub GraphQL API.
-- Search and social metadata with canonical URLs, Open Graph and X previews, JSON-LD, sitemap, robots, and a web manifest.
-- Vercel Analytics integration through `@vercel/analytics`.
-
-## Tech Stack
-
-- Framework: Next.js `16.2.6`
-- UI runtime: React `19.2.4` and React DOM `19.2.4`
-- Language: TypeScript `5`
-- Styling: Tailwind CSS `4`, `tw-animate-css`, CSS variables, and shadcn/ui
-- UI primitives and utilities: Radix UI, class-variance-authority, clsx, tailwind-merge
-- Icons: lucide-react and react-icons
-- Theme management: next-themes
-- Analytics: Vercel Analytics
-- Package manager: npm with `package-lock.json`
+- Next.js `16.2.6` (App Router, Turbopack) with React `19.2.4` and TypeScript
+- Plain CSS in `app/globals.css` (no CSS framework)
+- `next-themes` for the theme, `marked` for Markdown, `react-icons` for the technology logos
+- React view transitions for moving between pages (`experimental.viewTransition` in `next.config.ts`)
+- Vercel Analytics
 
 ## Routes
 
-| Route | Source | Description |
+| Route | Source | Content |
 | --- | --- | --- |
-| `/` | `app/page.tsx` | Home page with hero, GitHub graph, skills, and experience. |
-| `/about` | `app/about/page.tsx` | Personal overview, profile signals, story, and interests. |
-| `/projects` | `app/projects/page.tsx` | Project archive generated from local Markdown content. |
-| `/projects/[slug]` | `app/projects/[slug]/page.tsx` | Static project detail pages generated from project slugs. |
-| `/research` | `app/research/page.tsx` | Research and publications archive. |
-| `/research/[slug]` | `app/research/[slug]/page.tsx` | Static research detail pages generated from research slugs. |
+| `/` | `app/page.tsx` | Home, both sides |
+| `/about` | `app/about/page.tsx` | Personal story |
+| `/projects`, `/projects/[slug]` | `app/projects/` | From `content/projects/` |
+| `/research`, `/research/[slug]` | `app/research/` | From `lib/research.ts` |
+| `/blog`, `/blog/[slug]` | `app/blog/` | From `content/blog/` |
+| `/books`, `/books/[slug]` | `app/books/` | From `content/books/` |
+| `/feed.xml` | `app/feed.xml/route.ts` | RSS feed of the blog |
+| `/api/now-playing` | `app/api/now-playing/route.ts` | The last track played, from Last.fm |
 
-## Getting Started
+## Getting started
 
-### Prerequisites
-
-- Node.js `20.9` or newer.
-- npm, which is the package manager used by this repository.
-- A GitHub personal access token if you want the contribution graph to show live data.
-
-### Install
+Requires Node.js `20.9` or newer.
 
 ```bash
 npm install
-```
-
-### Configure Environment Variables
-
-Create a `.env.local` file in the project root. This repository does not rely on a committed `.env.example` file because `.env*` files are ignored by Git.
-
-PowerShell:
-
-```powershell
-New-Item -ItemType File .env.local
-```
-
-macOS/Linux:
-
-```bash
-touch .env.local
-```
-
-Add the variables you need:
-
-```env
-GITHUB_USERNAME=your-github-username
-GITHUB_TOKEN=github_pat_your-token
-```
-
-### Run Locally
-
-```bash
 npm run dev
 ```
 
 Open `http://localhost:3000`.
 
-### Production Preview
+## Environment variables
 
-```bash
-npm run build
-npm run start
-```
+Both are optional. Without them the "last played" line under the portrait simply stays empty.
 
-Open `http://localhost:3000` unless a different `PORT` is provided.
+| Variable | Description |
+| --- | --- |
+| `LASTFM_USERNAME` | The Last.fm account that the music app scrobbles to. |
+| `LASTFM_API_KEY` | A Last.fm API key. Server only; never expose it to the browser. |
 
-## Environment Variables
+Put them in `.env.local` for local work (the repository ignores `.env*` files) and in the hosting platform's environment settings for production.
 
-Store local values in `.env.local`.
+The play button beside that line plays Apple's 30-second preview of the song. The preview is found through Apple's public catalogue search (`lib/apple-music.ts`), which needs no key; the button only appears when the title and artist both match.
 
-| Variable | Required | Scope | Description |
-| --- | --- | --- | --- |
-| `GITHUB_USERNAME` | Recommended | Server only | GitHub username used by the contribution graph. |
-| `GITHUB_TOKEN` | Recommended | Server only | GitHub GraphQL API token used to fetch contribution data. Do not expose this in the browser. |
+## Writing content
 
-Notes:
+### A blog post
 
-- Keep `.env.local` private. The repo ignores `.env*` files.
-- Variables without `NEXT_PUBLIC_` stay server-side in Next.js.
-- The contribution graph calls `connection()` before reading GitHub env vars so runtime deployment values can be used.
-
-## Available Scripts
-
-| Script | Command | Purpose |
-| --- | --- | --- |
-| `npm run dev` | `next dev` | Starts the local development server. Next.js 16 uses Turbopack by default. |
-| `npm run build` | `next build` | Creates an optimized production build. |
-| `npm run start` | `next start` | Serves the production build. Run `build` first. |
-| `npm run lint` | `eslint` | Runs ESLint directly. Next.js 16 no longer relies on `next lint`. |
-| `npm run typecheck` | `tsc --noEmit` | Runs TypeScript without emitting files. |
-| `npm run format` | `prettier --write "**/*.{ts,tsx}"` | Formats TypeScript and TSX files. |
-
-## Project Structure
-
-```text
-.
-|-- app/                    # Next.js App Router routes, layout, metadata, and global CSS
-|-- components/             # Shared UI components and client components
-|-- components/ui/          # shadcn/ui components
-|-- content/projects/       # Markdown-backed project entries
-|-- hooks/                  # Shared React hooks
-|-- lib/                    # Profile, project parsing, research data, metadata, and utilities
-|-- public/                 # Static assets served from the site root
-|-- sections/               # Home page sections
-|-- scripts/                # Project scripts, if needed
-|-- AGENTS.md               # Local instructions for AI coding agents
-|-- components.json         # shadcn/ui configuration
-|-- eslint.config.mjs       # ESLint flat config
-|-- next.config.ts          # Next.js configuration
-|-- package.json            # Scripts and dependencies
-|-- postcss.config.mjs      # Tailwind/PostCSS configuration
-`-- tsconfig.json           # TypeScript configuration and path aliases
-```
-
-## Content Management
-
-### Profile and Social Links
-
-Edit `lib/profile.ts` to update:
-
-- Display name
-- Email address
-- GitHub username
-- X username
-- LinkedIn path
-- Footer and hero social links
-
-Edit `lib/site-metadata.ts` to update the name used in generated page titles.
-
-### Home Page Sections
-
-The home page composes section components from `sections/`.
-
-- `sections/HeroSection.tsx`: professional portrait, senior role, focus areas, résumé, project, contact, and social actions.
-- `sections/GithubCommitGraph.tsx`: GitHub contribution graph, loading skeleton, API request, cache interval, and fallback states.
-- `sections/SkillsSection.tsx`: skill list, icons, and icon colors.
-- `sections/ExperienceSection.tsx`: work timeline, company details, periods, locations, and highlights.
-
-### About Page
-
-Edit `app/about/page.tsx` to update:
-
-- Profile summary
-- Highlight cards
-- Personal story paragraphs
-- Interests beyond code
-- CV and contact actions
-
-The optimized profile image is in `public/images/`; the locally hosted résumé and social preview are in `public/`.
-
-### Projects
-
-Projects live in `content/projects/<slug>/index.md`.
-
-Each project file must include frontmatter followed by Markdown content.
+Add a Markdown file to `content/blog/`. The file name becomes the address: `content/blog/my-post.md` is served at `/blog/my-post`.
 
 ```md
 ---
-title: Example Project
-published: June 26, 2025
-category: Full Stack Project
-summary: Short summary shown in project cards and metadata.
-liveUrl: https://example.com
-codeUrl: https://github.com/user/repo
-# Optional for published packages:
-packageName: example-package
-packageRegistry: npm
-order: 1
-tech:
-  - Next.js
-  - TypeScript
-  - Tailwind CSS
-features:
-  - Feature one
-  - Feature two
+title: "My post"
+date: 2026-10-20
+topic: practice
 ---
 
-## Overview
-
-Project overview text.
-
-## Features
-
-- Important feature
-- Another important feature
+The post, in Markdown.
 ```
 
-Project behavior:
+- `topic` is what the filter on the blog page groups by.
+- Reading time is worked out from the text.
+- A file whose name starts with `_` is a draft and is not published.
+- `original` is optional: the address where the post first appeared. A post that has `original` but no text yet is listed with a link out to that address.
 
-- The folder name becomes the slug, for example `content/projects/petcom/index.md` maps to `/projects/petcom`.
-- `getProjects()` sorts projects by most recent `published` date first, then by `order`.
-- `liveUrl` and `codeUrl` are optional. Buttons only render when the fields exist.
-- `packageName` and `packageRegistry` are optional. Use `PyPI` or `npm` for the registry value to enable package metrics on cards and detail pages.
-- Package versions, rolling 30-day downloads, and latest release dates are loaded through `lib/package-stats.ts` and refreshed daily, with verified fallback values for registry outages.
-- `tech` appears in cards and the project detail sidebar.
-- `features` is used for feature counts and project snapshot metadata.
-- The custom Markdown renderer supports `##` headings, `###` headings, paragraphs, and `-` unordered lists.
-- Avoid unsupported Markdown features such as tables, images, blockquotes, and fenced code blocks unless `components/project-markdown.tsx` is extended.
+### A book
 
-### Research
+Add a Markdown file to `content/books/`. The shelf makes room for it, and starts a new shelf when one fills up.
 
-Research entries are defined in `lib/research.ts` as typed objects.
+```md
+---
+title: "Atomic Habits"
+author: James Clear
+order: 2
+cloth: "#2f4a3a"
+foil: "#e9dfc3"
+height: 164
+width: 36
+---
 
-Each research item includes:
+My notes, in Markdown.
+```
 
-- `slug`
-- `title`
-- `published`
-- `category`
-- `summary`
-- `keywords`
-- `paperUrl`
-- `metrics`
-- `sections`
+`cloth` and `foil` are the spine and lettering colours. `height` and `width` are the size of the spine in pixels. `order` sets the position on the shelf.
 
-Research behavior:
+### A project
 
-- `getResearchWorks()` powers `/research`.
-- `getResearchWork(slug)` powers `/research/[slug]`.
-- `generateStaticParams()` creates static detail routes from the research slug list.
-- Section titles become anchor links in the page sidebar.
+Projects live in `content/projects/<slug>/index.md`. Required fields: `title`, `published`, `category`, `summary`, `order`. Optional: `liveUrl`, `codeUrl`, `tech`, `features`, and for published packages `packageName`, `packageRegistry` (`npm` or `PyPI`), `installCommand`, `tagline` and `blurb`.
 
-## UI and Styling
+Package versions and download counts are read from npm and PyPI once a day by `lib/package-stats.ts`, which also holds fallback values for when a registry cannot be reached. A new package needs an entry there.
 
-- Global CSS is in `app/globals.css`.
-- Tailwind CSS is configured through CSS-first Tailwind 4 imports and design tokens.
-- shadcn/ui is configured in `components.json` with the `radix-nova` style and lucide icons.
-- Shared class merging uses `cn()` from `lib/utils.ts`.
-- The app uses `Inter` and `Geist_Mono` through `next/font/google` in `app/layout.tsx`.
-- Theme values are CSS variables for light and dark modes.
-- The root layout wraps all routes with `ThemeProvider`, `Navbar`, `SiteFooter`, and Vercel Analytics.
+### Everything else
 
-## Data Flow
+| What | Where |
+| --- | --- |
+| Name, email, social links, résumé path | `lib/profile.ts` |
+| Experience levels, education and awards | `lib/experience.ts` |
+| Research papers | `lib/research.ts` |
+| Anime list | `lib/anime.ts` |
+| Hero text for the two sides | `components/home-sides.tsx` |
+| About page text | `app/about/page.tsx` |
+| Skills icons and groups | `components/skills.tsx` |
 
-### GitHub Contribution Graph
+## Theme
 
-`sections/GithubCommitGraph.tsx` fetches contribution data from `https://api.github.com/graphql`.
+Every colour is a token at the top of `app/globals.css`, once for light and once for dark. Change the accent and the tinted neutrals there and the whole site follows. The colours of the share image (`app/opengraph-image.tsx`) and the browser bar (`app/layout.tsx`, `app/manifest.ts`) are set separately.
 
-Flow:
+The portrait's backdrop is part of the artwork. `art/sprites/` holds the original sheets, and this recolours their blues to the theme and writes the result to `public/sprites/`:
 
-1. `GithubCommitGraph` waits for a request with `connection()`.
-2. It reads `GITHUB_USERNAME` and `GITHUB_TOKEN`.
-3. If either value is missing, it renders an empty graph fallback.
-4. It queries the last year of contribution data.
-5. It renders contribution squares, month labels, weekday labels, totals, and a legend.
+```bash
+node scripts/tint-portrait.mjs
+```
 
-The fetch request uses `next: { revalidate: 60 * 60 }`, so successful API data can be revalidated hourly.
+Pass a hue in degrees to tint towards another colour, for example `node scripts/tint-portrait.mjs 150`.
 
-### Project Markdown
+## Project structure
 
-`lib/projects.ts` reads project files from disk and parses frontmatter with a small custom parser. `components/project-markdown.tsx` renders the supported Markdown blocks into styled React elements.
+```text
+.
+|-- app/                # Routes, layout, metadata routes and global CSS
+|-- art/sprites/        # Original portrait sheets, before tinting
+|-- components/         # Shared components (most interactive ones are client components)
+|-- content/blog/       # Blog posts
+|-- content/books/      # Book notes
+|-- content/projects/   # Project write-ups
+|-- lib/                # Data, content loaders and small helpers
+|-- public/sprites/     # Sprite sheets for the character and Bruno
+|-- scripts/            # One-off helpers (portrait tinting)
+`-- public/             # Photo, résumé and other static files
+```
 
-## Development Conventions
+## Scripts
 
-- Use the App Router. Public routes are created with `page.tsx` files inside `app/`.
-- Dynamic route `params` are asynchronous in this project. Await `params` before reading values in dynamic pages and metadata functions.
-- Keep shared code outside `app/` unless it is route-specific.
-- Use the `@/*` TypeScript alias instead of long relative imports.
-- Keep browser-only code in files marked with `"use client"`.
-- Keep secrets server-side. Only use `NEXT_PUBLIC_` for values that are safe to expose.
-- Before changing Next.js routing, metadata, caching, server/client component behavior, or data fetching, read the relevant installed docs under `node_modules/next/dist/docs/`.
+| Script | Purpose |
+| --- | --- |
+| `npm run dev` | Start the development server. |
+| `npm run build` | Create the production build. |
+| `npm run start` | Serve the production build. |
+| `npm run lint` | Run ESLint. |
+| `npm run typecheck` | Run TypeScript without emitting files. |
+| `npm run format` | Format TypeScript files with Prettier. |
+
+Run `lint`, `typecheck` and `build` before shipping a change.
 
 ## Deployment
 
-Vercel is the simplest deployment target for this app.
+The site is deployed on Vercel with the default Next.js settings. Set `LASTFM_USERNAME` and `LASTFM_API_KEY` in the project's environment variables if the "last played" line should show.
 
-Recommended Vercel settings:
+## Credits
 
-- Install command: `npm install`
-- Build command: `npm run build`
-- Output: handled automatically by Next.js/Vercel
-- Environment variables: set `GITHUB_USERNAME` and `GITHUB_TOKEN`
-
-For another Node.js host:
-
-```bash
-npm install
-npm run build
-npm run start
-```
-
-Set the `PORT` environment variable if the host does not use port `3000`.
-
-## Quality Checks
-
-Run these before shipping code changes:
-
-```bash
-npm run lint
-npm run typecheck
-npm run build
-```
-
-Formatting:
-
-```bash
-npm run format
-```
-
-If route types are stale, run one of the Next.js commands that generates route types:
-
-```bash
-npm run dev
-```
-
-or:
-
-```bash
-npx next typegen
-```
-
-## Troubleshooting
-
-### GitHub graph shows an empty fallback
-
-- Confirm `GITHUB_USERNAME` is set.
-- Confirm `GITHUB_TOKEN` is set and valid for GitHub GraphQL requests.
-- Restart the dev server after changing `.env.local`.
-- Check GitHub API rate limits or token permissions.
-
-### TypeScript reports missing generated route types
-
-- Run `npm run dev`, `npm run build`, or `npx next typegen`.
-- Keep `.next/types` and `.next/dev/types` generated locally; they are not meant for manual editing.
-
-### Project page fails while building
-
-- Check that every `content/projects/<slug>/index.md` file has frontmatter.
-- Make sure required fields exist: `title`, `published`, `category`, `summary`, and numeric `order`.
-- Make sure `tech` and `features` are simple lists.
-- Avoid unsupported Markdown syntax unless the custom renderer is updated.
-
-### Changes to environment variables do not appear
-
-- Restart `npm run dev` after editing `.env.local`.
-- Remember that `NEXT_PUBLIC_` values are inlined into browser bundles at build time.
-- For production, update environment variables in the deployment platform and redeploy when needed.
-
-## Notes for AI Coding Agents
-
-This project includes `AGENTS.md` because the installed Next.js version has conventions that may differ from older training data. Use the bundled docs in `node_modules/next/dist/docs/` as the source of truth for Next.js APIs, file conventions, routing, caching, and environment behavior.
+Anime artwork is served from AniList. Technology logos belong to their owners.

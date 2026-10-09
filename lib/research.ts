@@ -411,5 +411,10 @@ function getResearchWork(slug: string) {
   return researchWorks.find((work) => work.slug === slug) ?? null
 }
 
-export { getResearchWork, getResearchWorks, researchWorks }
+/** The year a paper came out, e.g. "2025". */
+function getResearchYear(work: ResearchWork) {
+  return work.published.match(/\d{4}/)?.[0] ?? ""
+}
+
+export { getResearchWork, getResearchWorks, getResearchYear, researchWorks }
 export type { ResearchMetric, ResearchSection, ResearchWork }

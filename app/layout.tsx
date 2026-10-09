@@ -1,28 +1,31 @@
-import type { Metadata } from "next"
-import { Geist_Mono, Hanken_Grotesk, Newsreader } from "next/font/google"
+import type { Metadata, Viewport } from "next"
+import {
+  Bricolage_Grotesque,
+  JetBrains_Mono,
+  Schibsted_Grotesk,
+} from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 
 import "./globals.css"
-import { Navbar } from "@/components/navbar"
+import { Bruno } from "@/components/bruno"
 import { SiteFooter } from "@/components/site-footer"
+import { SiteHeader } from "@/components/site-header"
 import { ThemeProvider } from "@/components/theme-provider"
 import { profile, socialLinks } from "@/lib/profile"
-import { siteTitleName, siteUrl } from "@/lib/site-metadata"
-import { cn } from "@/lib/utils"
+import { siteDescription, siteTitleName, siteUrl } from "@/lib/site-metadata"
 
-const fontSans = Hanken_Grotesk({
+const fontDisplay = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-sans",
-})
-
-const fontDisplay = Newsreader({
-  subsets: ["latin"],
-  style: ["italic", "normal"],
-  weight: ["400", "500"],
+  axes: ["opsz", "wdth"],
   variable: "--font-display",
 })
 
-const fontMono = Geist_Mono({
+const fontBody = Schibsted_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-body",
+})
+
+const fontMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 })
@@ -30,54 +33,52 @@ const fontMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteTitleName} — Senior Software Engineer`,
+    default: `${siteTitleName} — ${profile.title}`,
     template: `%s — ${siteTitleName}`,
   },
-  description:
-    "Portfolio of Devrajsinh Jhala, a software engineer and open-source developer building full-stack products, machine-learning tools, and research software.",
+  description: siteDescription,
   keywords: [
     "Devrajsinh Jhala",
-    "Senior Software Engineer",
-    "MediaTek",
+    "Devraj Jhala",
+    "Software Engineer",
+    "Cisco",
     "Open Source Developer",
-    "Systems Engineering",
+    "Systems Software",
     "PyTorch",
-    "Next.js",
     "Machine Learning Research",
   ],
   authors: [{ name: profile.name, url: siteUrl }],
   creator: profile.name,
   publisher: profile.name,
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    types: { "application/rss+xml": "/feed.xml" },
+  },
   openGraph: {
     type: "website",
     locale: "en_IN",
     url: siteUrl,
     siteName: profile.name,
-    title: `${profile.name} — ${profile.role}`,
-    description:
-      "Systems engineer, open-source developer, and published applied-ML researcher building dependable software.",
-    images: [
-      {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
-        alt: `${profile.name} — ${profile.role}`,
-      },
-    ],
+    title: `${profile.name} — ${profile.title}`,
+    description: siteDescription,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} — ${profile.role}`,
-    description:
-      "Systems engineer, open-source developer, and published applied-ML researcher building dependable software.",
-    images: ["/og.png"],
+    title: `${profile.name} — ${profile.title}`,
+    description: siteDescription,
     creator: `@${profile.xUsername}`,
   },
   robots: {
     index: true,
     follow: true,
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f3f9" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c0a12" },
+  ],
 }
 
 export default function RootLayout({
@@ -91,7 +92,7 @@ export default function RootLayout({
     name: profile.name,
     url: siteUrl,
     image: `${siteUrl}/images/myPhoto.webp`,
-    jobTitle: profile.role,
+    jobTitle: profile.title,
     worksFor: {
       "@type": "Organization",
       name: profile.employer,
@@ -109,13 +110,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn(
-        "antialiased",
-        fontMono.variable,
-        fontDisplay.variable,
-        "font-sans",
-        fontSans.variable
-      )}
+      className={`${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable}`}
     >
       <body>
         <script
@@ -125,13 +120,10 @@ export default function RootLayout({
           }}
         />
         <ThemeProvider>
-          <div className="flex min-h-svh flex-col">
-            <Navbar />
-            <main className="mx-auto w-full max-w-5xl flex-1 px-4 pt-4 pb-10 sm:px-6 sm:pt-5 lg:px-8 lg:pt-6">
-              {children}
-            </main>
-            <SiteFooter />
-          </div>
+          <SiteHeader />
+          <main className="wrap">{children}</main>
+          <SiteFooter />
+          <Bruno />
         </ThemeProvider>
         <Analytics />
       </body>

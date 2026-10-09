@@ -23,6 +23,8 @@ type PackageStats = {
   registryUrl: string
   version: string
   downloadsLastMonth: number
+  /** Every download since the first release, where the registry reports it. */
+  downloadsAllTime?: number
   lastPublished: string
   hasLiveMetadata: boolean
   hasLiveDownloads: boolean
@@ -67,7 +69,7 @@ const packageDefinitions: PackageDefinition[] = [
     registryUrl: "https://pypi.org/project/custom-dl-optimizer/",
     fallback: {
       version: "3.0.0",
-      downloadsLastMonth: 326,
+      downloadsLastMonth: 81,
       lastPublished: "2026-07-16",
     },
   },
@@ -77,8 +79,8 @@ const packageDefinitions: PackageDefinition[] = [
     registry: "PyPI",
     registryUrl: "https://pypi.org/project/researchplot-venues/",
     fallback: {
-      version: "2.0.0",
-      downloadsLastMonth: 425,
+      version: "2.0.1",
+      downloadsLastMonth: 164,
       lastPublished: "2026-08-13",
     },
   },
@@ -88,8 +90,8 @@ const packageDefinitions: PackageDefinition[] = [
     registry: "npm",
     registryUrl: "https://www.npmjs.com/package/npx-vibe",
     fallback: {
-      version: "1.5.1",
-      downloadsLastMonth: 794,
+      version: "3.0.0",
+      downloadsLastMonth: 560,
       lastPublished: "2026-07-13",
     },
   },
@@ -163,6 +165,35 @@ async function getPyPIStats(
   }
 }
 
+/**
+ * npm only answers for up to 18 months at a time, so the total is added up
+ * from year-long windows starting at the first release.
+ */
+async function getNpmAllTimeDownloads(name: string, created: string) {
+  const day = 86_400_000
+  const end = Date.now()
+  const windows: string[] = []
+
+  for (let start = Date.parse(created); start <= end; start += 365 * day) {
+    const from = new Date(start).toISOString().slice(0, 10)
+    const to = new Date(Math.min(end, start + 364 * day))
+      .toISOString()
+      .slice(0, 10)
+
+    windows.push(`${from}:${to}`)
+  }
+
+  const results = await Promise.all(
+    windows.map((range) =>
+      fetchJson<NpmDownloadsResponse>(
+        `https://api.npmjs.org/downloads/point/${range}/${name}`
+      )
+    )
+  )
+
+  return results.reduce((total, result) => total + (result.downloads ?? 0), 0)
+}
+
 async function getNpmStats(
   definition: PackageDefinition
 ): Promise<PackageStats> {
@@ -188,6 +219,15 @@ async function getNpmStats(
     downloadsResult.status === "fulfilled"
       ? downloadsResult.value.downloads
       : undefined
+  const created =
+    metadataResult.status === "fulfilled"
+      ? metadataResult.value.time?.created
+      : undefined
+  const downloadsAllTime = created
+    ? await getNpmAllTimeDownloads(definition.name, created.slice(0, 10)).catch(
+        () => undefined
+      )
+    : undefined
 
   return {
     projectSlug: definition.projectSlug,
@@ -199,6 +239,7 @@ async function getNpmStats(
       typeof liveDownloads === "number"
         ? liveDownloads
         : definition.fallback.downloadsLastMonth,
+    downloadsAllTime: downloadsAllTime || undefined,
     lastPublished: livePublished ?? definition.fallback.lastPublished,
     hasLiveMetadata: metadataResult.status === "fulfilled",
     hasLiveDownloads: typeof liveDownloads === "number",

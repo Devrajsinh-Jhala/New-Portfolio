@@ -8,6 +8,8 @@ codeUrl: https://github.com/Devrajsinh-Jhala/NPM-Vibe-check
 packageName: npx-vibe
 packageRegistry: npm
 installCommand: npx npx-vibe --check esbuild
+tagline: Checks an npm package before it runs.
+blurb: A supply chain safety scanner for npm packages. Zero runtime dependencies, and native MCP support so AI coding agents can check a package before running it.
 order: 3
 tech:
   - Node.js
@@ -44,7 +46,7 @@ npx npx-vibe --check esbuild
 Use the CLI as a guarded replacement for an ordinary npx command:
 
 ```bash
-npx npx-vibe cowsay -- hello from npx-vibe
+npx npx-vibe run cowsay -- hello from npx-vibe
 ```
 
 ## Why It Exists

@@ -1,15 +1,16 @@
 import type { MetadataRoute } from "next"
 
+import { siteDescription } from "@/lib/site-metadata"
+
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Devrajsinh Jhala — Portfolio",
-    short_name: "Devrajsinh",
-    description:
-      "Senior Software Engineer, open-source developer, and applied-ML researcher.",
+    name: "Devrajsinh Jhala",
+    short_name: "Devraj",
+    description: siteDescription,
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#111111",
+    background_color: "#f5f3f9",
+    theme_color: "#0c0a12",
     icons: [
       {
         src: "/favicon.ico",

@@ -11,6 +11,10 @@ type ProjectFrontmatter = {
   packageName?: string
   packageRegistry?: "PyPI" | "npm"
   installCommand?: string
+  /** One short sentence, for lists. */
+  tagline?: string
+  /** A fuller description in my own words, for the projects page. */
+  blurb?: string
   order: number
   tech: string[]
   features: string[]
@@ -178,6 +182,8 @@ function getProjectFromDirectory(slug: string): Project {
     packageName: optionalStringField(data, "packageName"),
     packageRegistry: optionalPackageRegistry(data),
     installCommand: optionalStringField(data, "installCommand"),
+    tagline: optionalStringField(data, "tagline"),
+    blurb: optionalStringField(data, "blurb"),
     order: numberField(data, "order"),
     tech: arrayField(data, "tech"),
     features: arrayField(data, "features"),

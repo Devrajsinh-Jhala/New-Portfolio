@@ -1,7 +1,11 @@
 const profile = {
   name: "Devrajsinh Jhala",
-  role: "Senior Software Engineer",
-  employer: "MediaTek",
+  shortName: "Devraj Jhala",
+  /** How the role is shown on the site. */
+  role: "SWE II",
+  /** The job title, spelled out for search engines. */
+  title: "Software Engineer",
+  employer: "Cisco",
   location: "Bengaluru, India",
   email: "jhaladevrajsinh11@gmail.com",
   website: "https://www.devraj.pro",
@@ -23,14 +27,14 @@ const socialLinks = [
     kind: "github",
   },
   {
-    label: "X",
-    href: `https://x.com/${profile.xUsername}`,
-    kind: "x",
-  },
-  {
     label: "LinkedIn",
     href: `https://www.linkedin.com/in/${profile.linkedinPath}/`,
     kind: "linkedin",
+  },
+  {
+    label: "X",
+    href: `https://x.com/${profile.xUsername}`,
+    kind: "x",
   },
 ] as const
 

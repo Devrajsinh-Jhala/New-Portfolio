@@ -1,209 +1,82 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowUpRight, Calendar, Download, Layers3, Tag } from "lucide-react"
 
-import {
-  formatDownloadCount,
-  getPackageStats,
-  getPackageStatsForProject,
-  type PackageStats,
-} from "@/lib/package-stats"
-import { getProjects, type Project } from "@/lib/projects"
+import { Arise, type AriseItem } from "@/components/arise"
+import { Page, PageHead, Shared } from "@/components/page"
+import { getPackageStats, getPackageStatsForProject } from "@/lib/package-stats"
+import { getProjects } from "@/lib/projects"
 
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Selected open-source packages and full-stack products by Devrajsinh Jhala across Python, PyTorch, npm, Next.js, TypeScript, and research tooling.",
+    "Open-source packages on npm and PyPI, and the full-stack apps Devrajsinh Jhala learned on, each with its own write-up.",
   alternates: { canonical: "/projects" },
 }
 
-function ProjectCard({
-  project,
-  stats,
-  featured = false,
-}: {
-  project: Project
-  stats: PackageStats | null
-  featured?: boolean
-}) {
-  return (
-    <Link
-      href={`/projects/${project.slug}`}
-      className="group block h-full focus-visible:outline-none"
-    >
-      <article className="flex h-full flex-col overflow-hidden rounded-lg border border-border/70 bg-card shadow-sm shadow-foreground/5 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:border-foreground/20 group-hover:shadow-md group-hover:shadow-foreground/10 group-focus-visible:ring-3 group-focus-visible:ring-ring/35">
-        {featured ? <div className="h-0.5 bg-brand/70" /> : null}
-        <div className="flex flex-1 flex-col p-4 sm:p-5">
-          <div className="mb-4 flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-md border border-border/70 bg-muted/60 px-2 py-1 text-xs font-medium text-muted-foreground">
-              <Calendar aria-hidden="true" className="size-3.5" />
-              {project.published}
-            </span>
-            <span className="rounded-md border border-border/70 bg-background/70 px-2 py-1 text-xs font-medium text-muted-foreground">
-              {project.category}
-            </span>
-          </div>
-
-          <h3 className="text-xl font-semibold tracking-normal text-balance text-foreground transition-colors group-hover:text-foreground/80">
-            {project.title}
-          </h3>
-
-          <p className="mt-3 line-clamp-4 flex-1 text-sm leading-6 text-muted-foreground">
-            {project.summary}
-          </p>
-
-          {project.installCommand ? (
-            <code className="mt-4 block overflow-x-auto rounded-md border border-border/70 bg-muted/55 px-3 py-2 font-mono text-xs whitespace-nowrap text-foreground">
-              $ {project.installCommand}
-            </code>
-          ) : null}
-
-          {stats ? (
-            <dl className="mt-5 grid grid-cols-3 gap-2 border-y border-border/70 py-3">
-              <div>
-                <dt className="text-[0.64rem] font-medium tracking-[0.11em] text-muted-foreground uppercase">
-                  Version
-                </dt>
-                <dd className="mt-1 text-sm font-semibold text-foreground">
-                  v{stats.version}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-[0.64rem] font-medium tracking-[0.11em] text-muted-foreground uppercase">
-                  Downloads
-                </dt>
-                <dd className="mt-1 text-sm font-semibold text-foreground">
-                  {formatDownloadCount(stats.downloadsLastMonth)}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-[0.64rem] font-medium tracking-[0.11em] text-muted-foreground uppercase">
-                  Registry
-                </dt>
-                <dd className="mt-1 text-sm font-semibold text-foreground">
-                  {stats.registry}
-                </dd>
-              </div>
-            </dl>
-          ) : null}
-
-          <div className="mt-5 flex flex-wrap gap-2">
-            {project.tech.slice(0, featured ? 3 : 4).map((item) => (
-              <span
-                key={item}
-                className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-1 text-xs text-muted-foreground"
-              >
-                <Tag aria-hidden="true" className="size-3" />
-                {item}
-              </span>
-            ))}
-          </div>
-
-          <div className="mt-5 flex items-center justify-between border-t border-border/70 pt-4 text-sm">
-            <span className="inline-flex items-center gap-1.5 font-medium text-foreground">
-              View case study
-              <ArrowUpRight
-                aria-hidden="true"
-                className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              />
-            </span>
-            {stats ? (
-              <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                <Download aria-hidden="true" className="size-3.5" />
-                {stats.downloadsLastMonth.toLocaleString()} / 30d
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                <Layers3 aria-hidden="true" className="size-3.5" />
-                {project.features.length} features
-              </span>
-            )}
-          </div>
-        </div>
-      </article>
-    </Link>
-  )
-}
-
 export default async function ProjectsPage() {
-  const [projects, packageStats] = await Promise.all([
-    Promise.resolve(getProjects()),
-    getPackageStats(),
-  ])
-  const featuredProjects = projects.filter((project) => project.packageName)
-  const archiveProjects = projects.filter((project) => !project.packageName)
+  const projects = getProjects()
+  const packageStats = await getPackageStats()
+  const packages: AriseItem[] = projects
+    .flatMap((project) => {
+      const stats = getPackageStatsForProject(packageStats, project.slug)
+
+      return stats
+        ? [
+            {
+              slug: project.slug,
+              title: project.title,
+              blurb: project.blurb ?? project.summary,
+              registry: stats.registry,
+              version: stats.version,
+              downloads: stats.downloadsLastMonth,
+              downloadsAllTime: stats.downloadsAllTime,
+              install: project.installCommand,
+              docsUrl: project.liveUrl,
+              codeUrl: project.codeUrl,
+            },
+          ]
+        : []
+    })
+    .sort((first, second) => second.downloads - first.downloads)
+  const builds = projects.filter((project) => !project.packageName)
 
   return (
-    <div className="mx-auto w-full max-w-5xl">
-      <section className="border-b border-border/70 py-10 sm:py-14">
-        <div className="grid gap-6 md:grid-cols-[minmax(0,0.8fr)_minmax(18rem,0.45fr)] md:items-end">
-          <div className="max-w-3xl space-y-5">
-            <p className="eyebrow">Projects</p>
-            <h1 className="max-w-3xl text-3xl font-semibold tracking-[-0.03em] text-balance text-foreground sm:text-5xl">
-              Software with{" "}
-              <span className="font-display text-[1.05em] text-brand">
-                evidence
-              </span>{" "}
-              behind it
-            </h1>
-          </div>
+    <Page>
+      <PageHead title="Projects" pose="thumbs">
+        Most of what I know came from building things and putting them out.
+      </PageHead>
 
-          <p className="max-w-sm text-sm leading-7 text-muted-foreground md:justify-self-end">
-            Maintained open-source tools and selected product builds — each one
-            written up through its constraints, the engineering decisions, and
-            what actually shipped.
-          </p>
-        </div>
+      <section>
+        <Arise items={packages} />
+        <p className="mono" style={{ marginTop: "1.5rem" }}>
+          Counts are read from npm and PyPI once a day. They count downloads,
+          not people.
+        </p>
       </section>
 
-      <section className="py-8" aria-labelledby="featured-projects-heading">
-        <div className="mb-6 grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-          <div>
-            <p className="eyebrow">Published tools</p>
-            <h2
-              id="featured-projects-heading"
-              className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-foreground"
-            >
-              Featured open-source work
-            </h2>
-          </div>
-          <p className="font-mono text-[0.7rem] text-muted-foreground">
-            Registry metrics refresh every 24 hours.
-          </p>
-        </div>
-
-        <div className="grid gap-5 lg:grid-cols-3">
-          {featuredProjects.map((project) => (
-            <ProjectCard
-              key={project.slug}
-              project={project}
-              stats={getPackageStatsForProject(packageStats, project.slug)}
-              featured
-            />
+      <section className="sec">
+        <h2 className="h">Earlier builds</h2>
+        <p className="sub">
+          The full-stack apps I learned on. Each one opens its own write-up.
+        </p>
+        <ul className="rows">
+          {builds.map((project) => (
+            <li key={project.slug}>
+              <span className="mono">
+                {project.published.match(/\d{4}/)?.[0]}
+              </span>
+              <span className="t">
+                <Shared name={`project-${project.slug}`}>
+                  <Link className="shared" href={`/projects/${project.slug}`}>
+                    {project.title}
+                  </Link>
+                </Shared>
+                <span className="mono m">{project.summary}</span>
+              </span>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
-
-      <section
-        className="border-t border-border/70 py-8"
-        aria-labelledby="project-archive-heading"
-      >
-        <div className="mb-6">
-          <p className="eyebrow">Product archive</p>
-          <h2
-            id="project-archive-heading"
-            className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-foreground"
-          >
-            Selected full-stack builds
-          </h2>
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-2">
-          {archiveProjects.map((project) => (
-            <ProjectCard key={project.slug} project={project} stats={null} />
-          ))}
-        </div>
-      </section>
-    </div>
+    </Page>
   )
 }
