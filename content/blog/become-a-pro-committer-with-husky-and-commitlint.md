@@ -156,7 +156,7 @@ npx standard-version --first-release
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1710853018960/0c278ec8-6b3f-4a56-8e26-f68a1b7f315d.png)
 
-File named [CHANGELOG.md](http://CHANGELOG.md) will be created after fetching details from the commit message you gave.
+File named `CHANGELOG.md` will be created after fetching details from the commit message you gave.
 
 ```markdown
 # Changelog

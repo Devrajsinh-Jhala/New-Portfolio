@@ -40,7 +40,7 @@ Let's understand the files and folders by elimination. First let's understand th
 
 -   tailwind.config.js and postcss.config.js: This file as the name suggest denotes the configuration of the Tailwind CSS throughout the project. If you have not selected Tailwind CSS then you will not get this file.
 
--   [README.md](http://README.md): Markdown file for writing documentation of your project
+-   `README.md`: Markdown file for writing documentation of your project
 
 -   next-env.d.ts: This is again a file related to typescript and does not have a major role at least in the beginning. If you have not selected TypeScript, this won't even appear.
 

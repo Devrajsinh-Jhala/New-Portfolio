@@ -18,7 +18,7 @@ As you can see the root folder is your `app` directory and from that you have on
 
 ### Nested Routes:
 
-You can also create Nested Routes:- [Nested Routes](https://nextjs.org/docs/getting-started/project-structure#nested-routes) are routes like [`www.domain.com/blog/next.js-is-awesome`](http://www.domain.com/blog/next.js-is-awesome). To create such nested routes we will just follow the convention above as follows:
+You can also create Nested Routes:- [Nested Routes](https://nextjs.org/docs/getting-started/project-structure#nested-routes) are routes like `www.domain.com/blog/next.js-is-awesome`. To create such nested routes we will just follow the convention above as follows:
 
 -   Creating a folder named blog in your app directory that will point to `/blog` and then creating a dynamic route in the blog directory by creating folder according to the convention (we will be exploring this sooner). What it will do is, it will catch all the routes coming from let's say database and will present it in the `/blog/name-of-the-blog`.
 
