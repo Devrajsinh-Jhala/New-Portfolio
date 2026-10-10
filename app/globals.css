@@ -270,6 +270,8 @@ section > .bookcase:first-child{margin-top:0}
 
 footer{border-top:1px solid var(--line);padding-block:1.5rem 3.5rem;color:var(--faint);display:grid;gap:.5rem}
 footer .links{margin-top:0;color:var(--muted)}
+.visits{min-height:1.2rem;color:var(--muted)}
+.visits b{font-weight:500;color:var(--fg);font-variant-numeric:tabular-nums}
 #bruno{position:fixed;left:0;top:0;width:84px;height:84px;z-index:30;pointer-events:none;transition:transform .11s linear;will-change:transform;view-transition-name:bruno}
 #bruno canvas{display:block;width:100%;height:100%;filter:drop-shadow(0 0 1.2px var(--halo)) drop-shadow(0 0 1.2px var(--halo))}
 #bruno .hopper{display:block}

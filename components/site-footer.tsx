@@ -1,3 +1,4 @@
+import { VisitorCount } from "@/components/visitor-count"
 import { profile, socialLinks } from "@/lib/profile"
 
 function SiteFooter() {
@@ -22,6 +23,7 @@ function SiteFooter() {
           rss
         </a>
       </div>
+      <VisitorCount />
     </footer>
   )
 }
