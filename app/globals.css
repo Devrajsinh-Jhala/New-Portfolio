@@ -6,7 +6,7 @@
   --body:var(--font-body),system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:var(--font-mono),ui-monospace,Menlo,Consolas,monospace;
   --bar:3.25rem; --gutter:clamp(16px,4vw,40px);
-  --dirs:url("/sprites/character-directions.webp"); --reacts:url("/sprites/character-reactions.webp");
+  --dirs:url("/sprites/character-directions.webp"); --reacts:url("/sprites/character-reactions.webp"); --portrait:#bfaaee;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){ --bg:#0c0a12; --surface:#14111d; --fg:#ebe8f5; --muted:#9d98b3; --faint:#605b78; --line:#262238; --accent:#b29bff; --shade:#000000; --ghost:#302b4a; --halo:rgb(214 208 240 / .6); color-scheme:dark }
@@ -53,7 +53,7 @@ button{font:inherit;color:inherit}
 .hero .line{font-size:clamp(1.1rem,2.4vw,1.35rem);line-height:1.4;max-width:40ch;margin-top:1.4rem}
 .hero .own{color:var(--muted);max-width:38rem;margin-top:1rem}
 .hero .pick{margin-top:1.5rem;display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1rem}
-.chara{position:relative;display:block;flex:none;padding:0;border:0;border-radius:50%;overflow:hidden;background:var(--shade);cursor:pointer;outline:1.5px solid var(--line);outline-offset:6px;transition:transform .2s}
+.chara{position:relative;display:block;flex:none;padding:0;border:0;border-radius:50%;overflow:hidden;background:var(--portrait);cursor:pointer;transition:transform .2s}
 .chara:active{transform:scale(.96)}
 .chara i{position:absolute;inset:0;background-image:var(--dirs);background-size:300% 300%;background-repeat:no-repeat;background-position:50% 50%;transition:opacity .16s linear}
 .chara i + i{opacity:0}
@@ -87,7 +87,7 @@ button{font:inherit;color:inherit}
 .num span{display:block}
 .num .in{animation:numIn .55s cubic-bezier(.2,.8,.2,1)}
 @keyframes numIn{from{transform:translateY(60%);opacity:0}to{transform:none;opacity:1}}
-.lvup{position:absolute;left:0;top:-1.5rem;font:500 .72rem var(--mono);color:var(--accent);opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s}
+.lvup{position:absolute;left:0;top:calc(-1 * clamp(1.5rem,4vh,2.5rem));font:500 .72rem var(--mono);color:var(--accent);opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s}
 .lvup.show{opacity:1;transform:none}
 .lvstack{display:grid;min-width:0}
 .lvbody{grid-area:1 / 1;padding-top:.1rem;min-width:0}
@@ -136,7 +136,8 @@ button{font:inherit;color:inherit}
 .rows .t{font-weight:500;line-height:1.35}
 .rows .m{display:block;margin-top:.2rem}
 .rows a{text-decoration:none;background:linear-gradient(var(--accent),var(--accent)) 0 100%/0 1.5px no-repeat;transition:background-size .3s,color .2s}
-.rows a.shared{display:inline-block}
+/* One box, so the title can travel to its page; a block, so a wrapped title still lines up on its first line (an inline-block lines up on its last, and Safari then lets the title spill into the row above). */
+.rows a.shared{display:block;width:fit-content}
 .rows a:hover{background-size:100% 1.5px;color:var(--accent)}
 
 .phead{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);align-items:center;column-gap:clamp(1.5rem,5vw,4.5rem);padding-block:clamp(2rem,6vw,3.75rem) clamp(1.25rem,3.5vw,2.25rem)}
@@ -269,6 +270,8 @@ section > .bookcase:first-child{margin-top:0}
 
 footer{border-top:1px solid var(--line);padding-block:1.5rem 3.5rem;color:var(--faint);display:grid;gap:.5rem}
 footer .links{margin-top:0;color:var(--muted)}
+.visits{min-height:1.2rem;color:var(--muted)}
+.visits b{font-weight:500;color:var(--fg);font-variant-numeric:tabular-nums}
 #bruno{position:fixed;left:0;top:0;width:84px;height:84px;z-index:30;pointer-events:none;transition:transform .11s linear;will-change:transform;view-transition-name:bruno}
 #bruno canvas{display:block;width:100%;height:100%;filter:drop-shadow(0 0 1.2px var(--halo)) drop-shadow(0 0 1.2px var(--halo))}
 #bruno .hopper{display:block}
@@ -298,6 +301,7 @@ html[data-vt="side"]::view-transition-new(root){z-index:1}
 @media (min-height:880px) and (max-aspect-ratio:10/11){
   .lv{grid-template-columns:minmax(0,1fr);gap:clamp(1rem,3vh,2.5rem)}
   .num{font-size:min(42vw,27vh)}
+  .lvup{top:-1.5rem}
   .xp{margin-bottom:clamp(1rem,3vh,2.5rem)}
 }
 @media (max-width:40rem),(max-height:560px){
@@ -327,7 +331,7 @@ html[data-vt="side"]::view-transition-new(root){z-index:1}
   .lv{grid-template-columns:minmax(0,1fr);gap:.6rem}
   .numbox{display:flex;align-items:baseline;gap:.6rem}
   .num{font-size:3.75rem}
-  .lvup{top:auto;bottom:-1.1rem}
+  .lvup{position:static;order:1}
   .lvbody h3{font-size:1.4rem}
   .pts{margin-top:.6rem;gap:.3rem;font-size:.9rem;line-height:1.4}
   .gain{margin-top:.7rem}
