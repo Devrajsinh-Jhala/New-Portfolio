@@ -122,13 +122,13 @@ Package versions and download counts are read from npm and PyPI once a day by `l
 
 Every colour is a token at the top of `app/globals.css`, once for light and once for dark. Change the accent and the tinted neutrals there and the whole site follows. The colours of the share image (`app/opengraph-image.tsx`) and the browser bar (`app/layout.tsx`, `app/manifest.ts`) are set separately.
 
-The portrait's backdrop is part of the artwork. `art/sprites/` holds the original sheets, and this recolours their blues to the theme and writes the result to `public/sprites/`:
+The portrait's backdrop is part of the artwork. `art/sprites/` holds the original sheets, which have a navy backdrop. This turns it into a soft lavender, a light tint of the theme's hue, and writes the result to `public/sprites/`:
 
 ```bash
 node scripts/tint-portrait.mjs
 ```
 
-Pass a hue in degrees to tint towards another colour, for example `node scripts/tint-portrait.mjs 150`.
+Pass a hue in degrees to tint towards another colour, for example `node scripts/tint-portrait.mjs 150`. The `--portrait` token in `app/globals.css` fills the circle while the sheets load, so set it to the new backdrop colour as well.
 
 ## Project structure
 

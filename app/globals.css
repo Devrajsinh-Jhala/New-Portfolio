@@ -6,7 +6,7 @@
   --body:var(--font-body),system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:var(--font-mono),ui-monospace,Menlo,Consolas,monospace;
   --bar:3.25rem; --gutter:clamp(16px,4vw,40px);
-  --dirs:url("/sprites/character-directions.webp"); --reacts:url("/sprites/character-reactions.webp");
+  --dirs:url("/sprites/character-directions.webp"); --reacts:url("/sprites/character-reactions.webp"); --portrait:#bfaaee;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){ --bg:#0c0a12; --surface:#14111d; --fg:#ebe8f5; --muted:#9d98b3; --faint:#605b78; --line:#262238; --accent:#b29bff; --shade:#000000; --ghost:#302b4a; --halo:rgb(214 208 240 / .6); color-scheme:dark }
@@ -53,7 +53,7 @@ button{font:inherit;color:inherit}
 .hero .line{font-size:clamp(1.1rem,2.4vw,1.35rem);line-height:1.4;max-width:40ch;margin-top:1.4rem}
 .hero .own{color:var(--muted);max-width:38rem;margin-top:1rem}
 .hero .pick{margin-top:1.5rem;display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1rem}
-.chara{position:relative;display:block;flex:none;padding:0;border:0;border-radius:50%;overflow:hidden;background:var(--shade);cursor:pointer;outline:1.5px solid var(--line);outline-offset:6px;transition:transform .2s}
+.chara{position:relative;display:block;flex:none;padding:0;border:0;border-radius:50%;overflow:hidden;background:var(--portrait);cursor:pointer;transition:transform .2s}
 .chara:active{transform:scale(.96)}
 .chara i{position:absolute;inset:0;background-image:var(--dirs);background-size:300% 300%;background-repeat:no-repeat;background-position:50% 50%;transition:opacity .16s linear}
 .chara i + i{opacity:0}
